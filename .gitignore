@@ -1,0 +1,9 @@
+.vscode
+node_modules/
+yarn-error.log
+dist/bundle.js
+dist/streamvbyte.js
+dist/streamvbyte.wasm*
+streamvbyte/streamvbyte.html
+streamvbyte/streamvbyte.js
+streamvbyte/streamvbyte.wasm*
