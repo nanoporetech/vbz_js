@@ -5,6 +5,8 @@
 #include <stdio.h>
 #include <string.h>
 
+#include <xmmintrin.h>
+
 static inline
 uint32_t _zigzag_encode_32 (uint32_t val) {
 	return (val + val) ^ ((int32_t)val >> 31);

@@ -104,7 +104,7 @@ function decompress(to_decompress, out_size, options) {
         if (options.integer_size != 0) {
             const in_size = decompressed_out.byteLength;
             let encoded_buffer_ptr = stackAlloc(in_size);
-            writeArrayToMemory(new Int8Array(decompressed_out.buffer), encoded_buffer_ptr);
+            writeArrayToMemory(new Int8Array(decompressed_out), encoded_buffer_ptr);
 
             const decoded_size = out_size * 6; // total guess.
             const decoded_buffer_ptr = stackAlloc(decoded_size);
