@@ -1,0 +1,13 @@
+{
+  "dependencies": {
+    "browserify": "^17.0.0",
+    "zstd-codec": "^0.1.2"
+  },
+  "scripts": {
+    "build": "browserify index.js -o dist/bundle.js -t babelify --presets es2015"
+  },
+  "devDependencies": {
+    "babel-core": "^6.26.0",
+    "babelify": "^8.0.0"
+  }
+}

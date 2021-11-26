@@ -1,0 +1,26 @@
+stages:
+  - wasm
+  - package
+
+build-wasm:
+  stage: wasm
+  image: emscripten/emsdk
+  script:
+    - cd ./streamvbyte
+    - ./build.sh
+  artifacts:
+    paths:
+      - ./dist/streamvbyte.js
+      - ./dist/streamvbyte.wasm
+
+
+package:
+  stage: package
+  needs: ['build-wasm']
+  image: yarnpkg/node-yarn
+  script:
+    - yarn install
+    - yarn build
+  artifacts:
+    paths:
+      - ./dist/
