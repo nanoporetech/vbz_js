@@ -7,14 +7,17 @@
   <body>
     <div id="result"></div>
     <script type="module">
-      import * as FastCTC from "./fast_ctc_decode_wasm.js";
+      import * as VBZ from "../dist/bundle.js";
 
+      console.log(VBZ);
+
+      /*
       FastCTC.default().then(() => {
         const method = String(window.method);
         if (typeof FastCTC[method] !== "function") return false;
         const result = FastCTC[method](window.posteriors, ...window.params);
         document.getElementById("result").innerHTML = JSON.stringify(result);
-      });
+      }); */
     </script>
   </body>
 </html>
