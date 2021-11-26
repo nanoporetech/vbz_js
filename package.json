@@ -3,7 +3,10 @@
     "zstd-codec": "^0.1.2"
   },
   "scripts": {
-    "build": "browserify index.js -o dist/bundle.js -t babelify --presets es2015"
+    "build": "browserify index.js -o dist/bundle.js -t babelify --presets es2015 && node post-install.js",
+    "serve": "serve -s dist",
+    "test": "jest --runInBand --detectOpenHandles",
+    "test:watch": "npm test --watch"
   },
   "devDependencies": {
     "babel-core": "^6.26.0",
@@ -28,7 +31,7 @@
     "resetMocks": false,
     "preset": "jest-puppeteer",
     "collectCoverageFrom": [
-      "tests/**/*.{js}",
+      "tests/**/*.test.{js}",
       "!node_modules/"
     ],
     "coverageThreshold": {
