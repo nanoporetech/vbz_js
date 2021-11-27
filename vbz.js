@@ -1,4 +1,4 @@
-const ZstdCodec = require('zstd-codec');
+const Module = require('./dist/streamvbyte.mjs');
 
 class VbzOptions {
     constructor(perform_delta_zig_zag, integer_size, zstd_compression_level, vbz_version, zstd) {
@@ -142,8 +142,7 @@ function decompress_with_size(to_decompress, options) {
     return decompress(data_section, header_section[0], options);
 };
 
-module.vbz = {};
-module.exports.vbz = {
+export const vbz = {
     compress: compress,
     compress_with_size: compress_with_size,
     decompress: decompress,

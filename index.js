@@ -1,2 +1,4 @@
-window.ZstdCodec = require('zstd-codec').ZstdCodec;
-window.vbz = require('./vbz').vbz;
+import { ZstdCodec } from 'zstd-codec';
+import { vbz } from './vbz';
+
+export default { ZstdCodec, vbz }
