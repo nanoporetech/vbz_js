@@ -3,7 +3,9 @@
     "zstd-codec": "^0.1.2"
   },
   "scripts": {
-    "build": "browserify index.js -o dist/bundle.js -t babelify --presets es2015 && node post-install.js",
+    "build:svbyte": "cd streamvbyte && ./build.sh",
+    "build:bundle": "browserify index.js -o dist/bundle.js -t babelify --presets es2015 && node post-install.js",
+    "build": "mkdir -p dist && npm run build:svbyte && npm run build:bundle",
     "serve": "serve -s dist",
     "test": "jest --runInBand --detectOpenHandles",
     "test:watch": "npm test --watch"
