@@ -1,5 +1,5 @@
 {
-  "main": "bundle.js",
+  "main": "./dist/bundle.js",
   "dependencies": {
     "zstd-codec": "^0.1.2"
   },
