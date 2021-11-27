@@ -139,7 +139,7 @@ const setup = async (method, params) => {
     params !== undefined && await windowSet(page, "params", JSON.stringify(params), false);
   }
 
-  const contentHtml = fs.readFileSync(`${__dirname}/index.html`, 'utf8');
+  const contentHtml = fs.readFileSync(`${__dirname}/../dist/index.html`, 'utf8');
   await page.setContent(contentHtml);
 };
 
