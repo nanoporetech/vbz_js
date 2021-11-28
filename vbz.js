@@ -1,4 +1,6 @@
-const Module = require('./dist/streamvbyte.mjs');
+const streamvbyte = require('./dist/streamvbyte.mjs');
+
+const Module = streamvbyte.default();
 
 class VbzOptions {
     constructor(perform_delta_zig_zag, integer_size, zstd_compression_level, vbz_version, zstd) {
@@ -27,10 +29,17 @@ class VbzOptions {
     }
 };
 
-const zigzag_delta_encode = Module.cwrap('zigzag_delta_encode', null, ['number', 'number', 'number', 'number']);
-const zigzag_delta_decode = Module.cwrap('zigzag_delta_decode', null, ['number', 'number', 'number', 'number']);
-const streamvbyte_encode = Module.cwrap('streamvbyte_encode', 'number', ['number', 'number', 'number']);
-const streamvbyte_decode = Module.cwrap('streamvbyte_decode', 'number', ['number', 'number', 'number']);
+let zigzag_delta_encode = null;
+let zigzag_delta_decode = null;
+let streamvbyte_encode = null;
+let streamvbyte_decode = null;
+
+Module.then((mod) => {
+    zigzag_delta_encode = mod.cwrap('zigzag_delta_encode', null, ['number', 'number', 'number', 'number']);
+    zigzag_delta_decode = mod.cwrap('zigzag_delta_decode', null, ['number', 'number', 'number', 'number']);
+    streamvbyte_encode = mod.cwrap('streamvbyte_encode', 'number', ['number', 'number', 'number']);
+    streamvbyte_decode = mod.cwrap('streamvbyte_decode', 'number', ['number', 'number', 'number']);
+});
 
 // Compress an Int??Array.
 function compress(to_compress, options) {

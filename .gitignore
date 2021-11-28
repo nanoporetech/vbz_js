@@ -6,3 +6,4 @@ dist/
 streamvbyte/streamvbyte.html
 streamvbyte/streamvbyte.js
 streamvbyte/streamvbyte.wasm*
+.parcel-cache

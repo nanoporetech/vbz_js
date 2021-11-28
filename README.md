@@ -7,3 +7,9 @@ TIp: If installed but EMCC not found in VSCode, download the repo, cd into it an
 ```
 source ./emsdk_env.sh
 ```
+
+Build
+```
+cd streamvbyte
+.build.sh
+```
