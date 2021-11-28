@@ -1,22 +1,20 @@
 import { ZstdCodec } from 'zstd-codec';
 import { vbz } from './vbz';
 
-const compress = (zstd_lvl) => {
+const decompress = (d, zstd_lvl = 0, promise = false) => {
+    if(!promise) {
+        const options = new vbz.VbzOptions(true, 2, zstd_lvl, 0, false);
+        return vbz.decompress_with_size(d, options)
+    }
 
     return new Promise(res => {
         ZstdCodec.run((zstd) => {
             const options = new vbz.VbzOptions(true, 2, zstd_lvl, 0, zstd);
-    
-            let random_datas = make_random_data_array();
-            let compressed_random_datas = [];
-            for (let d_idx in random_datas) {
-                const d = random_datas[d_idx];
-                compressed_random_datas.push(vbz.compress_with_size(d, options));
-            }
+            const decompressed = vbz.decompress_with_size(d, options)
             
-            res(compressed_random_datas);
+            res(decompressed);
         });
     })
 };
 
-module.exports = { compress, ZstdCodec, vbz }
+module.exports = { decompress, ZstdCodec, vbz }

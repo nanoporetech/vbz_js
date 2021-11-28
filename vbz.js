@@ -33,8 +33,19 @@ let zigzag_delta_encode = null;
 let zigzag_delta_decode = null;
 let streamvbyte_encode = null;
 let streamvbyte_decode = null;
+let stackSave = null;
+let stackRestore = null;
+let stackAlloc = null;
+let writeArrayToMemory = null;
+let wasmMemory = null;
 
 Module.then((mod) => {
+    console.log(Module, mod);
+    wasmMemory = mod.asm.memory;
+    stackSave = mod.stackSave;
+    stackRestore = mod.stackRestore;
+    stackAlloc = mod.stackAlloc;
+    writeArrayToMemory = mod.writeArrayToMemory;
     zigzag_delta_encode = mod.cwrap('zigzag_delta_encode', null, ['number', 'number', 'number', 'number']);
     zigzag_delta_decode = mod.cwrap('zigzag_delta_decode', null, ['number', 'number', 'number', 'number']);
     streamvbyte_encode = mod.cwrap('streamvbyte_encode', 'number', ['number', 'number', 'number']);
@@ -42,7 +53,7 @@ Module.then((mod) => {
 });
 
 // Compress an Int??Array.
-function compress(to_compress, options) {
+function compress(to_compress, options = {}) {
     const stack_top = stackSave();
 
     try {
@@ -89,7 +100,7 @@ function compress(to_compress, options) {
     }
 };
 
-function compress_with_size(to_compress, options) {
+function compress_with_size(to_compress, options = {}) {
     const compressed = compress(to_compress, options);
 
     let buffer = new ArrayBuffer(compressed.length + 4);
@@ -101,7 +112,7 @@ function compress_with_size(to_compress, options) {
     return new Int8Array(buffer);
 };
 
-function decompress(to_decompress, out_size, options) {
+function decompress(to_decompress, out_size, options = {}) {
     const stack_top = stackSave();
     try {
         let decompressed_out = to_decompress;
@@ -144,7 +155,7 @@ function decompress(to_decompress, out_size, options) {
     }
 };
 
-function decompress_with_size(to_decompress, options) {
+function decompress_with_size(to_decompress, options = {}) {
     let data_section = new Int8Array(to_decompress.buffer, 4, to_decompress.length - 4);
     let header_section = new Int32Array(to_decompress.buffer, 0, 1);
 
