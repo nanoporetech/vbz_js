@@ -156,8 +156,8 @@ function decompress(to_decompress, out_size, options = {}) {
 };
 
 function decompress_with_size(to_decompress, options = {}) {
-    let data_section = new Int8Array(to_decompress.buffer, 4, to_decompress.length - 4);
-    let header_section = new Int32Array(to_decompress.buffer, 0, 1);
+    let data_section = new Int8Array(to_decompress, 4, to_decompress.byteLength - 4);
+    let header_section = new Int32Array(to_decompress, 0, 1);
 
     return decompress(data_section, header_section[0], options);
 };

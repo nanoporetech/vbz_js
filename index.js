@@ -1,20 +1,62 @@
-import { ZstdCodec } from 'zstd-codec';
+import * as ZSTD from './zstd/zstd-codec';
+const zstdWasm = require('./zstd/zstd-codec-binding-wasm.js');
 import { vbz } from './vbz';
 
-const decompress = (d, zstd_lvl = 0, promise = false) => {
+const decompress = (d, options = null, promise = false,) => {
+    console.log("Inside Decompress!!!");
     if(!promise) {
-        const options = new vbz.VbzOptions(true, 2, zstd_lvl, 0, false);
-        return vbz.decompress_with_size(d, options)
+        console.log("Options param--- are:", options);
+        //const options1 = options; //|| new vbz.VbzOptions(true, 2, 0, 0, false);
+        //console.log("Data Buffer is ", d);
+        const returnedData = vbz.decompress_with_size(d, options);
+        //console.log("returned data is", returnedData);
+        //console.log("return data buffer", Buffer.from(returnedData));
+        return Buffer.from(returnedData);
     }
 
-    return new Promise(res => {
-        ZstdCodec.run((zstd) => {
-            const options = new vbz.VbzOptions(true, 2, zstd_lvl, 0, zstd);
-            const decompressed = vbz.decompress_with_size(d, options)
-            
-            res(decompressed);
-        });
+    let decompressed; 
+    testfunc(d, options).then((res) => {
+        decompressed = res;
     })
+
+    return Buffer.from(decompressed);
 };
 
-module.exports = { decompress, ZstdCodec, vbz }
+const testfunc = async (d, options) => {
+    // const myvar = ZSTD.run((zstd) => {
+    //     // const options = options || new vbz.VbzOptions(true, 2, 0, 0, zstd);
+    //     options.zstd = zstd;
+    //     const decomp = vbz.decompress_with_size(d, options)
+    //     return decomp;
+    // }); 
+
+    // Export OnReady
+    // Call 
+    let myvar;
+
+    // const Module = {};
+    // Module['onRuntimeInitialized'] = () => {
+    //     console.log("Run time initialised");
+    //     options.zstd = ZSTD.onReady(Module);
+    //     const decomp = vbz.decompress_with_size(d, options)
+    //     myvar = decomp;
+    //     return decomp;
+    // };
+
+    const myMod = await zstdWasm();
+    options.zstd = ZSTD.onReady(myMod);
+    const decomp = vbz.decompress_with_size(d, options)
+    // options.zstd = ZSTD.onReady(Module);
+    // const decomp = vbz.decompress_with_size(d, options)
+    
+    console.log("MYMOD is", myMod);
+    console.log("myvar is", myvar);
+    let counter = 0;
+    return myvar;
+}
+
+const testfunc2 = () => {
+
+}
+
+module.exports = { decompress, vbz }
