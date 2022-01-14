@@ -20,9 +20,6 @@
   "publishConfig": {
     "access": "public"
   },
-  "dependencies": {
-    "zstd-codec": "^0.1.2"
-  },
   "scripts": {
     "build:svbyte": "cd streamvbyte && ./build.sh",
     "build:bundle": "npx babel index.js --out-file ./dist/bundle.js --config-file ./babel.config.js && node post-install.js",
@@ -69,5 +66,8 @@
         "statements": -15
       }
     }
+  },
+  "dependencies": {
+    "zstd-codec": "^0.1.2"
   }
 }

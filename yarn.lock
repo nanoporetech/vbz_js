@@ -8945,6 +8945,7 @@
     "buffer-crc32" "~0.2.3"
     "fd-slicer" "~1.1.0"
 
-"zstd-codec@file:../zstd-codec/js":
-  "resolved" "file:../zstd-codec/js"
-  "version" "0.1.1"
+"zstd-codec@^0.1.2":
+  "integrity" "sha512-t1gdk33h1wT7YcBPebyGWGJTWodKsJVfDeVN0q2x/htPGLEX3BAuBvOFsU4W3BplbmTXwvH8c/TUZ/DPTXOFfg=="
+  "resolved" "https://registry.npmjs.org/zstd-codec/-/zstd-codec-0.1.2.tgz"
+  "version" "0.1.2"

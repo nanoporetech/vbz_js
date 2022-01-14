@@ -125,11 +125,16 @@ function decompress(to_decompress, out_size, options = {}) {
             const in_size = decompressed_out.byteLength;
             let encoded_buffer_ptr = stackAlloc(in_size);
             writeArrayToMemory(new Int8Array(decompressed_out), encoded_buffer_ptr);
-
-            const decoded_size = out_size * 6; // total guess.
+            
+            console.log("OutSize",out_size);
+            
+            const decoded_size = out_size * 5; // total guess.
+            console.log("decoded_size",decoded_size);
             const decoded_buffer_ptr = stackAlloc(decoded_size);
-
+            console.log("decoded_buffer_ptr",decoded_buffer_ptr);
+            
             const out_buffer_size = streamvbyte_decode(encoded_buffer_ptr, decoded_buffer_ptr, out_size);
+            console.log("out_buffer_size",out_buffer_size);
             if (out_buffer_size != in_size) {
                 throw "Bad output size";
             }

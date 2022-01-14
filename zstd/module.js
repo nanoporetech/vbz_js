@@ -19,7 +19,7 @@ exports.run = (f) => {
     };
 
     if (wasmSupported) {
-        const myModule = require('./zstd-codec-binding-wasm.js')(Module);
+        require('./zstd-codec-binding-wasm.js')(Module);
     }
     else {
         require('./zstd-codec-binding.js')(Module);
