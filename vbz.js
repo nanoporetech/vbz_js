@@ -1,4 +1,6 @@
-const ZstdCodec = require('zstd-codec');
+const streamvbyte = require('./dist/streamvbyte.mjs');
+
+const Module = streamvbyte.default();
 
 class VbzOptions {
     constructor(perform_delta_zig_zag, integer_size, zstd_compression_level, vbz_version, zstd) {
@@ -27,13 +29,30 @@ class VbzOptions {
     }
 };
 
-const zigzag_delta_encode = Module.cwrap('zigzag_delta_encode', null, ['number', 'number', 'number', 'number']);
-const zigzag_delta_decode = Module.cwrap('zigzag_delta_decode', null, ['number', 'number', 'number', 'number']);
-const streamvbyte_encode = Module.cwrap('streamvbyte_encode', 'number', ['number', 'number', 'number']);
-const streamvbyte_decode = Module.cwrap('streamvbyte_decode', 'number', ['number', 'number', 'number']);
+let zigzag_delta_encode = null;
+let zigzag_delta_decode = null;
+let streamvbyte_encode = null;
+let streamvbyte_decode = null;
+let stackSave = null;
+let stackRestore = null;
+let stackAlloc = null;
+let writeArrayToMemory = null;
+let wasmMemory = null;
+
+Module.then((mod) => {
+    wasmMemory = mod.asm.memory;
+    stackSave = mod.stackSave;
+    stackRestore = mod.stackRestore;
+    stackAlloc = mod.stackAlloc;
+    writeArrayToMemory = mod.writeArrayToMemory;
+    zigzag_delta_encode = mod.cwrap('zigzag_delta_encode', null, ['number', 'number', 'number', 'number']);
+    zigzag_delta_decode = mod.cwrap('zigzag_delta_decode', null, ['number', 'number', 'number', 'number']);
+    streamvbyte_encode = mod.cwrap('streamvbyte_encode', 'number', ['number', 'number', 'number']);
+    streamvbyte_decode = mod.cwrap('streamvbyte_decode', 'number', ['number', 'number', 'number']);
+});
 
 // Compress an Int??Array.
-function compress(to_compress, options) {
+function compress(to_compress, options = {}) {
     const stack_top = stackSave();
 
     try {
@@ -80,7 +99,7 @@ function compress(to_compress, options) {
     }
 };
 
-function compress_with_size(to_compress, options) {
+function compress_with_size(to_compress, options = {}) {
     const compressed = compress(to_compress, options);
 
     let buffer = new ArrayBuffer(compressed.length + 4);
@@ -92,7 +111,7 @@ function compress_with_size(to_compress, options) {
     return new Int8Array(buffer);
 };
 
-function decompress(to_decompress, out_size, options) {
+function decompress(to_decompress, out_size, options = {}) {
     const stack_top = stackSave();
     try {
         let decompressed_out = to_decompress;
@@ -105,14 +124,10 @@ function decompress(to_decompress, out_size, options) {
             const in_size = decompressed_out.byteLength;
             let encoded_buffer_ptr = stackAlloc(in_size);
             writeArrayToMemory(new Int8Array(decompressed_out), encoded_buffer_ptr);
-
+            
             const decoded_size = out_size * 6; // total guess.
             const decoded_buffer_ptr = stackAlloc(decoded_size);
-
             const out_buffer_size = streamvbyte_decode(encoded_buffer_ptr, decoded_buffer_ptr, out_size);
-            if (out_buffer_size != in_size) {
-                throw "Bad output size";
-            }
 
             if (options.perform_delta_zig_zag) {
                 const decompressed_buffer_size = out_size * options.integer_size;
@@ -135,15 +150,15 @@ function decompress(to_decompress, out_size, options) {
     }
 };
 
-function decompress_with_size(to_decompress, options) {
-    let data_section = new Int8Array(to_decompress.buffer, 4, to_decompress.length - 4);
-    let header_section = new Int32Array(to_decompress.buffer, 0, 1);
+function decompress_with_size(to_decompress, options = {}) {
+    let data_section = new Int8Array(to_decompress, 4, to_decompress.byteLength - 4);
+    let header_section = new Int32Array(to_decompress, 0, 1);
+    let outSizeBits = header_section[0];
 
-    return decompress(data_section, header_section[0], options);
+    return decompress(data_section, outSizeBits / 2, options);
 };
 
-module.vbz = {};
-module.exports.vbz = {
+export const vbz = {
     compress: compress,
     compress_with_size: compress_with_size,
     decompress: decompress,
