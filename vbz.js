@@ -40,7 +40,6 @@ let writeArrayToMemory = null;
 let wasmMemory = null;
 
 Module.then((mod) => {
-    console.log(Module, mod);
     wasmMemory = mod.asm.memory;
     stackSave = mod.stackSave;
     stackRestore = mod.stackRestore;
@@ -126,18 +125,9 @@ function decompress(to_decompress, out_size, options = {}) {
             let encoded_buffer_ptr = stackAlloc(in_size);
             writeArrayToMemory(new Int8Array(decompressed_out), encoded_buffer_ptr);
             
-            console.log("OutSize",out_size);
-            
-            const decoded_size = out_size * 5; // total guess.
-            console.log("decoded_size",decoded_size);
+            const decoded_size = out_size * 6; // total guess.
             const decoded_buffer_ptr = stackAlloc(decoded_size);
-            console.log("decoded_buffer_ptr",decoded_buffer_ptr);
-            
             const out_buffer_size = streamvbyte_decode(encoded_buffer_ptr, decoded_buffer_ptr, out_size);
-            console.log("out_buffer_size",out_buffer_size);
-            if (out_buffer_size != in_size) {
-                throw "Bad output size";
-            }
 
             if (options.perform_delta_zig_zag) {
                 const decompressed_buffer_size = out_size * options.integer_size;
@@ -163,8 +153,9 @@ function decompress(to_decompress, out_size, options = {}) {
 function decompress_with_size(to_decompress, options = {}) {
     let data_section = new Int8Array(to_decompress, 4, to_decompress.byteLength - 4);
     let header_section = new Int32Array(to_decompress, 0, 1);
+    let outSizeBits = header_section[0];
 
-    return decompress(data_section, header_section[0], options);
+    return decompress(data_section, outSizeBits / 2, options);
 };
 
 export const vbz = {
