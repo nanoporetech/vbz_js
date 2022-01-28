@@ -2,7 +2,6 @@
 .vscode
 node_modules/
 yarn-error.log
-dist/
 streamvbyte/streamvbyte.html
 streamvbyte/streamvbyte.js
 streamvbyte/streamvbyte.wasm*
