@@ -1,6 +1,6 @@
 {
   "name": "vbzjs",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "private": true,
   "main": "./dist/bundle.js",
   "path": "./dist",
@@ -24,7 +24,7 @@
     "build:svbyte": "cd streamvbyte && ./build.sh",
     "build:bundle": "npx babel index.js --out-file ./dist/bundle.js --config-file ./babel.config.js && node post-install.js",
     "build:node": "parcel build index.js --target main",
-    "build": "mkdir -p dist && npm run build:svbyte && npm run build:bundle",
+    "build": "rm -rf dist && mkdir -p dist && npm run build:svbyte && npm run build:node",
     "serve": "serve -s dist",
     "test": "jest --runInBand --detectOpenHandles",
     "test:watch": "npm test --watch"
