@@ -5,10 +5,10 @@ const puppeteer = require('puppeteer');
     const page = await browser.newPage();
 
     await page.addScriptTag({ path: './dist/browser/index.js', type: 'module' });
-    const generalInfo = await page.evaluate(() => {
+    const result = await page.evaluate(() => {
         return window
     });
 
-    console.log(generalInfo); // prints fooBarBaz
+    console.log(result);
     await browser.close();
 })();
