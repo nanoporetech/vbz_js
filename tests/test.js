@@ -6,7 +6,7 @@ const puppeteer = require('puppeteer');
 
     await page.addScriptTag({ path: './dist/browser/index.js', type: 'module' });
     const result = await page.evaluate(() => {
-        return window
+        return window // will always be undefined, pass page.$(window) as second evaluation arg.
     });
 
     console.log(result);
