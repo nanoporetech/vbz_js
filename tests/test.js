@@ -5,11 +5,14 @@ const puppeteer = require('puppeteer');
     const page = await browser.newPage();
 
     await page.addScriptTag({ path: './dist/browser/index.js', type: 'module' });
-    const window = await page.$('window');
-    const result = await page.evaluate((window) => {
-        return window
-    }, window);
 
-    console.log(result);
+    const refMethod = () => {
+        return window; // either expose bundle methods to window or load module
+    }
+
+    const data = await page.evaluate(refMethod);
+    console.log(data);
+    
     await browser.close();
 })();
+
