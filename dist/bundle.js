@@ -13,10 +13,10 @@
 /*!******************!*\
   !*** ./index.js ***!
   \******************/
-/***/ ((module, __webpack_exports__, __webpack_require__) => {
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var zstd_codec__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! zstd-codec */ \"./node_modules/zstd-codec/index.js\");\n/* harmony import */ var zstd_codec__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(zstd_codec__WEBPACK_IMPORTED_MODULE_0__);\n/* harmony import */ var _vbz__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./vbz */ \"./vbz.js\");\n/* module decorator */ module = __webpack_require__.hmd(module);\n\n\n\nlet ZSTD = null;\nzstd_codec__WEBPACK_IMPORTED_MODULE_0__.ZstdCodec.run(zstd => ZSTD = zstd);\n\nconst decompress = (d, options = null) => {\n    const decompressed = decompressWithZSTD(d, options);\n    const myVal = decompressed.buffer;\n    return myVal;\n};\n\nconst decompressWithZSTD = (d, options) => {\n    options.zstd = ZSTD;\n    const decomp = _vbz__WEBPACK_IMPORTED_MODULE_1__.vbz.decompress_with_size(d, options)\n    return decomp;\n}\n\nmodule.exports = { decompress, vbz: _vbz__WEBPACK_IMPORTED_MODULE_1__.vbz }\n\n\n//# sourceURL=webpack://vbzjs/./index.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"decompress\": () => (/* binding */ decompress),\n/* harmony export */   \"vbz\": () => (/* reexport safe */ _vbz__WEBPACK_IMPORTED_MODULE_1__.vbz)\n/* harmony export */ });\n/* harmony import */ var zstd_codec__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! zstd-codec */ \"./node_modules/zstd-codec/index.js\");\n/* harmony import */ var zstd_codec__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(zstd_codec__WEBPACK_IMPORTED_MODULE_0__);\n/* harmony import */ var _vbz__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./vbz */ \"./vbz.js\");\n\n\n\nlet ZSTD = null;\nzstd_codec__WEBPACK_IMPORTED_MODULE_0__.ZstdCodec.run(zstd => ZSTD = zstd);\n\nconst decompress = (d, options = null) => {\n    const decompressed = decompressWithZSTD(d, options);\n    const myVal = decompressed.buffer;\n    return myVal;\n};\n\nconst decompressWithZSTD = (d, options) => {\n    options.zstd = ZSTD;\n    const decomp = _vbz__WEBPACK_IMPORTED_MODULE_1__.vbz.decompress_with_size(d, options)\n    return decomp;\n}\n\n\n\n\n//# sourceURL=webpack://vbzjs/./index.js?");
 
 /***/ }),
 
@@ -196,21 +196,6 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpac
 /******/ 		};
 /******/ 	})();
 /******/ 	
-/******/ 	/* webpack/runtime/harmony module decorator */
-/******/ 	(() => {
-/******/ 		__webpack_require__.hmd = (module) => {
-/******/ 			module = Object.create(module);
-/******/ 			if (!module.children) module.children = [];
-/******/ 			Object.defineProperty(module, 'exports', {
-/******/ 				enumerable: true,
-/******/ 				set: () => {
-/******/ 					throw new Error('ES Modules may not assign module.exports or exports.*, Use ESM export syntax, instead: ' + module.id);
-/******/ 				}
-/******/ 			});
-/******/ 			return module;
-/******/ 		};
-/******/ 	})();
-/******/ 	
 /******/ 	/* webpack/runtime/hasOwnProperty shorthand */
 /******/ 	(() => {
 /******/ 		__webpack_require__.o = (obj, prop) => (Object.prototype.hasOwnProperty.call(obj, prop))
@@ -240,7 +225,7 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpac
 /******/ 	
 /******/ 	// startup
 /******/ 	// Load entry module and return exports
-/******/ 	// This entry module is referenced by other modules so it can't be inlined
+/******/ 	// This entry module can't be inlined because the eval devtool is used.
 /******/ 	var __webpack_exports__ = __webpack_require__("./index.js");
 /******/ 	
 /******/ })()

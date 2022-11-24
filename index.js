@@ -16,4 +16,4 @@ const decompressWithZSTD = (d, options) => {
     return decomp;
 }
 
-module.exports = { decompress, vbz }
+export { decompress, vbz }
