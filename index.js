@@ -1,5 +1,3 @@
-const zstdWasm = require('./zstd/zstd-codec-binding-wasm.js');
-
 import { ZstdCodec } from 'zstd-codec';
 import { vbz } from './vbz';
 
