@@ -4,7 +4,7 @@ describe("VBZ Compression / Decompression", () => {
     it.only("should return correct byte size", async () => {
         const browser = await puppeteer.launch({ dumpio: true });
         const page = await browser.newPage();
-        await page.addScriptTag({ path: "./dist/bundle.js" });
+        await page.addScriptTag({ path: "./dist/bundle-test.js" });
 
         const refMethod = () => {
             testData = [2, 5, 10];
