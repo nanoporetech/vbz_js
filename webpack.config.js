@@ -2,11 +2,11 @@ const path = require('path');
 
 module.exports = {
     entry: './index.js',
-    mode: 'development',
+    mode: 'production',
     target: 'web',
     output: {
       path: path.resolve(__dirname, 'dist'),
-      filename: 'bundle.js',
+      filename: 'bundle-test.js',
     },
     resolve: {
         fallback: {
