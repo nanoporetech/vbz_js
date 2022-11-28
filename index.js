@@ -16,4 +16,15 @@ const decompressWithZSTD = (d, options) => {
     return decomp;
 }
 
+const compress = (d, options) => {
+    options.zstd = ZSTD;
+    const comp = vbz.compress_with_size(d, options)
+    return comp;
+}
+
+if(typeof window === 'object'){
+    ZstdCodec.run(zstd => window.zstd = zstd);
+    window.vbzjs = {vbz, decompress, compress };
+}
+
 export { decompress, vbz }
