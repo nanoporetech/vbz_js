@@ -2,8 +2,8 @@ const puppeteer = require("puppeteer");
 
 let browser;
 let page;
-describe("VBZ Compression / Decompression", () => {
 
+describe("VBZ Compression / Decompression", () => {
     beforeAll(async () => {
         browser = await puppeteer.launch({ dumpio: true });
         page = await browser.newPage();
@@ -15,7 +15,7 @@ describe("VBZ Compression / Decompression", () => {
         await browser.close();
     });
 
-    it.only("should return correct byte size", async () => {
+    it("should return correct byte size", async () => {
         const refMethod = () => {
             const testArray = [2, 5, 10];
             let dataArray = [];
@@ -27,5 +27,4 @@ describe("VBZ Compression / Decompression", () => {
         const data = await page.evaluate(refMethod);
         expect(data).toEqual([25, 38, 59]);
     });
-
 });
