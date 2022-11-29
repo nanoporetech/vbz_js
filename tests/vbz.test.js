@@ -1,10 +1,12 @@
 const puppeteer = require("puppeteer");
 
+let browser;
+let page;
 describe("VBZ Compression / Decompression", () => {
 
     beforeAll(async () => {
-        const browser = await puppeteer.launch({ dumpio: true });
-        const page = await browser.newPage();
+        browser = await puppeteer.launch({ dumpio: true });
+        page = await browser.newPage();
         await page.addScriptTag({ path: "./dist/bundle-test.js" });
         await page.waitForFunction(() => document.readyState === "complete");
     });
@@ -15,11 +17,11 @@ describe("VBZ Compression / Decompression", () => {
 
     it.only("should return correct byte size", async () => {
         const refMethod = () => {
-            testData = [2, 5, 10];
-            dataArray = [];
-            dataArray.push(window.vbzjs.vbz.streamvbyte_max_compressedbytes(testData[0]));
-            dataArray.push(window.vbzjs.vbz.streamvbyte_max_compressedbytes(testData[1]));
-            dataArray.push(window.vbzjs.vbz.streamvbyte_max_compressedbytes(testData[2]));
+            const testArray = [2, 5, 10];
+            let dataArray = [];
+
+            for (testData of testArray) dataArray.push(window.vbzjs.vbz.streamvbyte_max_compressedbytes(testData));
+            
             return dataArray;
         };
         const data = await page.evaluate(refMethod);
