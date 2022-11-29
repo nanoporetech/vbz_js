@@ -19,6 +19,6 @@ cd streamvbyte
 Run tests via jest
 To do: Move all tests from test_script.js to vbz.test.js
 ```
-yarn build:bundle-test
+yarn build:test
 yarn test
 ```
