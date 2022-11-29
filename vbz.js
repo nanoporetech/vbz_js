@@ -12,7 +12,6 @@ class VbzOptions {
 
         if (this.zstd_compression_level != 0 && !this.zstd) {
             throw new Error("js_vbz zstd compression requires a zstd reference");
-
         }
 
         if (this.vbz_version != 0) {
@@ -38,6 +37,7 @@ let stackRestore = null;
 let stackAlloc = null;
 let writeArrayToMemory = null;
 let wasmMemory = null;
+let streamvbyte_max_compressedbytes = null;
 
 Module.then((mod) => {
     wasmMemory = mod.asm.memory;
@@ -49,6 +49,7 @@ Module.then((mod) => {
     zigzag_delta_decode = mod.cwrap('zigzag_delta_decode', null, ['number', 'number', 'number', 'number']);
     streamvbyte_encode = mod.cwrap('streamvbyte_encode', 'number', ['number', 'number', 'number']);
     streamvbyte_decode = mod.cwrap('streamvbyte_decode', 'number', ['number', 'number', 'number']);
+    streamvbyte_max_compressedbytes = mod.cwrap('streamvbyte_max_compressedbytes', 'number', ['number']);
 });
 
 // Compress an Int??Array.
@@ -124,8 +125,7 @@ function decompress(to_decompress, out_size, options = {}) {
             const in_size = decompressed_out.byteLength;
             let encoded_buffer_ptr = stackAlloc(in_size);
             writeArrayToMemory(new Int8Array(decompressed_out), encoded_buffer_ptr);
-            
-            const decoded_size = out_size * 6; // total guess.
+            const decoded_size = streamvbyte_max_compressedbytes(out_size);
             const decoded_buffer_ptr = stackAlloc(decoded_size);
             const out_buffer_size = streamvbyte_decode(encoded_buffer_ptr, decoded_buffer_ptr, out_size);
 
@@ -158,10 +158,15 @@ function decompress_with_size(to_decompress, options = {}) {
     return decompress(data_section, outSizeBits / 2, options);
 };
 
+function streamvbyte_max_compressedbytes1(out_size) {
+    return streamvbyte_max_compressedbytes(out_size);
+}
+
 export const vbz = {
     compress: compress,
     compress_with_size: compress_with_size,
     decompress: decompress,
     decompress_with_size: decompress_with_size,
-    VbzOptions: VbzOptions
+    streamvbyte_max_compressedbytes: streamvbyte_max_compressedbytes1,
+    VbzOptions: VbzOptions,
 };

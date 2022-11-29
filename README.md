@@ -15,3 +15,10 @@ Build
 cd streamvbyte
 .build.sh
 ```
+# Testing
+Run tests via jest
+To do: Move all tests from test_script.js to vbz.test.js
+```
+yarn build:test
+yarn test
+```

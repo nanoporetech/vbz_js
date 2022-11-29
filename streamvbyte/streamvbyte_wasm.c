@@ -149,3 +149,12 @@ size_t streamvbyte_decode(const uint8_t *in, uint32_t *out, uint32_t count) {
 
   return svb_decode_scalar(out, keyPtr, dataPtr, count) - in;
 }
+
+EMSCRIPTEN_KEEPALIVE
+size_t streamvbyte_max_compressedbytes(const uint32_t length) {
+   // number of control bytes:
+   size_t cb = (length + 3) / 4;
+   // maximum number of control bytes:
+   size_t db = (size_t) length * sizeof(uint32_t);
+   return cb + db + 16;
+}
