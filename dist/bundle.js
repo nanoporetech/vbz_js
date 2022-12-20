@@ -10,15 +10,15 @@ $parcel$export(module.exports, "decompress", () => $690dfc9e93e1337c$export$678d
 $parcel$export(module.exports, "vbz", () => $b0e90092f9853fbf$export$612534c750e55a8b);
 
 
+var $c0aee7a0d0b12351$var$$parcel$__dirname = $gYrdT$path.resolve(__dirname, "");
+
 
 
 var $c0aee7a0d0b12351$var$Module = (()=>{
     var _scriptDir = "file:///dist/streamvbyte.mjs";
     return function(Module) {
-        Module = Module || {
-        };
-        var Module = typeof Module != "undefined" ? Module : {
-        };
+        Module = Module || {};
+        var Module = typeof Module != "undefined" ? Module : {};
         var readyPromiseResolve, readyPromiseReject;
         Module["ready"] = new Promise(function(resolve, reject) {
             readyPromiseResolve = resolve;
@@ -34,13 +34,11 @@ var $c0aee7a0d0b12351$var$Module = (()=>{
             "onRuntimeInitialized"
         ].forEach((prop)=>{
             if (!Object.getOwnPropertyDescriptor(Module["ready"], prop)) Object.defineProperty(Module["ready"], prop, {
-                get: ()=>abort("You are getting " + prop + " on the Promise object, instead of the instance. Use .then() to get called back with the instance, see the MODULARIZE docs in src/settings.js")
-                ,
+                get: ()=>abort("You are getting " + prop + " on the Promise object, instead of the instance. Use .then() to get called back with the instance, see the MODULARIZE docs in src/settings.js"),
                 set: ()=>abort("You are setting " + prop + " on the Promise object, instead of the instance. Use .then() to get called back with the instance, see the MODULARIZE docs in src/settings.js")
             });
         });
-        var moduleOverrides = Object.assign({
-        }, Module);
+        var moduleOverrides = Object.assign({}, Module);
         var arguments_ = [];
         var thisProgram = "./this.program";
         var quit_ = (status, toThrow)=>{
@@ -64,17 +62,15 @@ var $c0aee7a0d0b12351$var$Module = (()=>{
                 e,
                 e.stack
             ];
-            err1("exiting due to exception: " + toLog);
+            err("exiting due to exception: " + toLog);
         }
         if (ENVIRONMENT_IS_NODE) {
             if (typeof process == "undefined" || !process.release || process.release.name !== "node") throw new Error("not compiled for this environment (did you build to HTML and try to run it not on the web, or set ENVIRONMENT to something - like node - and run it someplace else - like on the web?)");
             if (ENVIRONMENT_IS_WORKER) scriptDirectory = $gYrdT$path.dirname(scriptDirectory) + "/";
-            else scriptDirectory = __dirname + "/";
+            else scriptDirectory = $c0aee7a0d0b12351$var$$parcel$__dirname + "/";
             var fs, nodePath;
-            if ("function" === "function") {
-                fs = $gYrdT$fs;
-                nodePath = $gYrdT$path;
-            }
+            fs = $gYrdT$fs;
+            nodePath = $gYrdT$path;
             read_ = (filename, binary)=>{
                 var ret = tryParseAsDataURI(filename);
                 if (ret) return binary ? ret : ret.toString();
@@ -116,7 +112,7 @@ var $c0aee7a0d0b12351$var$Module = (()=>{
                 return "[Emscripten Module object]";
             };
         } else if (ENVIRONMENT_IS_SHELL) {
-            if (typeof process == "object" && "function" === "function" || typeof window == "object" || typeof importScripts == "function") throw new Error("not compiled for this environment (did you build to HTML and try to run it not on the web, or set ENVIRONMENT to something - like node - and run it someplace else - like on the web?)");
+            if (typeof process == "object" && true || typeof window == "object" || typeof importScripts == "function") throw new Error("not compiled for this environment (did you build to HTML and try to run it not on the web, or set ENVIRONMENT to something - like node - and run it someplace else - like on the web?)");
             if (typeof read != "undefined") read_ = function shell_read(f) {
                 const data = tryParseAsDataURI(f);
                 if (data) return intArrayToString(data);
@@ -132,8 +128,7 @@ var $c0aee7a0d0b12351$var$Module = (()=>{
                 return data;
             };
             readAsync = function readAsync(f, onload, onerror) {
-                setTimeout(()=>onload(readBinary(f))
-                , 0);
+                setTimeout(()=>onload(readBinary(f)), 0);
             };
             if (typeof scriptArgs != "undefined") arguments_ = scriptArgs;
             else if (typeof arguments != "undefined") arguments_ = arguments;
@@ -142,8 +137,7 @@ var $c0aee7a0d0b12351$var$Module = (()=>{
                 quit(status);
             };
             if (typeof print != "undefined") {
-                if (typeof console == "undefined") console = {
-                };
+                if (typeof console == "undefined") console = {};
                 console.log = print;
                 console.warn = console.error = typeof printErr != "undefined" ? printErr : print;
             }
@@ -156,7 +150,7 @@ var $c0aee7a0d0b12351$var$Module = (()=>{
             if (!(typeof window == "object" || typeof importScripts == "function")) throw new Error("not compiled for this environment (did you build to HTML and try to run it not on the web, or set ENVIRONMENT to something - like node - and run it someplace else - like on the web?)");
             read_ = (url)=>{
                 try {
-                    var xhr = new XMLHttpRequest();
+                    var xhr = new XMLHttpRequest;
                     xhr.open("GET", url, false);
                     xhr.send(null);
                     return xhr.responseText;
@@ -168,7 +162,7 @@ var $c0aee7a0d0b12351$var$Module = (()=>{
             };
             if (ENVIRONMENT_IS_WORKER) readBinary = (url)=>{
                 try {
-                    var xhr = new XMLHttpRequest();
+                    var xhr = new XMLHttpRequest;
                     xhr.open("GET", url, false);
                     xhr.responseType = "arraybuffer";
                     xhr.send(null);
@@ -180,7 +174,7 @@ var $c0aee7a0d0b12351$var$Module = (()=>{
                 }
             };
             readAsync = (url, onload, onerror)=>{
-                var xhr = new XMLHttpRequest();
+                var xhr = new XMLHttpRequest;
                 xhr.open("GET", url, true);
                 xhr.responseType = "arraybuffer";
                 xhr.onload = ()=>{
@@ -198,11 +192,10 @@ var $c0aee7a0d0b12351$var$Module = (()=>{
                 xhr.onerror = onerror;
                 xhr.send(null);
             };
-            setWindowTitle = (title)=>document.title = title
-            ;
+            setWindowTitle = (title)=>document.title = title;
         } else throw new Error("environment detection error");
         var out = Module["print"] || console.log.bind(console);
-        var err1 = Module["printErr"] || console.warn.bind(console);
+        var err = Module["printErr"] || console.warn.bind(console);
         Object.assign(Module, moduleOverrides);
         moduleOverrides = null;
         checkIncomingModuleAPI();
@@ -350,9 +343,9 @@ var $c0aee7a0d0b12351$var$Module = (()=>{
             assert(typeof maxBytesToWrite == "number", "stringToUTF8(str, outPtr, maxBytesToWrite) is missing the third parameter that specifies the length of the output buffer!");
             return stringToUTF8Array(str, HEAPU8, outPtr, maxBytesToWrite);
         }
-        var buffer1, HEAP8, HEAPU8, HEAP16, HEAPU16, HEAP32, HEAPU32, HEAPF32, HEAPF64;
+        var buffer, HEAP8, HEAPU8, HEAP16, HEAPU16, HEAP32, HEAPU32, HEAPF32, HEAPF64;
         function updateGlobalBufferAndViews(buf) {
-            buffer1 = buf;
+            buffer = buf;
             Module["HEAP8"] = HEAP8 = new Int8Array(buf);
             Module["HEAP16"] = HEAP16 = new Int16Array(buf);
             Module["HEAP32"] = HEAP32 = new Int32Array(buf);
@@ -362,11 +355,11 @@ var $c0aee7a0d0b12351$var$Module = (()=>{
             Module["HEAPF32"] = HEAPF32 = new Float32Array(buf);
             Module["HEAPF64"] = HEAPF64 = new Float64Array(buf);
         }
-        var STACK_SIZE = 5242880;
-        if (Module["STACK_SIZE"]) assert(STACK_SIZE === Module["STACK_SIZE"], "the stack size can no longer be determined at runtime");
+        var TOTAL_STACK = 8388608;
+        if (Module["TOTAL_STACK"]) assert(TOTAL_STACK === Module["TOTAL_STACK"], "the stack size can no longer be determined at runtime");
         var INITIAL_MEMORY = Module["INITIAL_MEMORY"] || 16777216;
         legacyModuleProp("INITIAL_MEMORY", "INITIAL_MEMORY");
-        assert(INITIAL_MEMORY >= STACK_SIZE, "INITIAL_MEMORY should be larger than STACK_SIZE, was " + INITIAL_MEMORY + "! (STACK_SIZE=" + STACK_SIZE + ")");
+        assert(INITIAL_MEMORY >= TOTAL_STACK, "INITIAL_MEMORY should be larger than TOTAL_STACK, was " + INITIAL_MEMORY + "! (TOTAL_STACK=" + TOTAL_STACK + ")");
         assert(typeof Int32Array != "undefined" && typeof Float64Array !== "undefined" && Int32Array.prototype.subarray != undefined && Int32Array.prototype.set != undefined, "JS engine does not provide full typed array support");
         assert(!Module["wasmMemory"], "Use of `wasmMemory` detected.  Use -sIMPORTED_MEMORY to define wasmMemory externally");
         assert(INITIAL_MEMORY == 16777216, "Detected runtime INITIAL_MEMORY setting.  Use -sIMPORTED_MEMORY to define wasmMemory dynamically");
@@ -440,8 +433,7 @@ var $c0aee7a0d0b12351$var$Module = (()=>{
         var runDependencies = 0;
         var runDependencyWatcher = null;
         var dependenciesFulfilled = null;
-        var runDependencyTracking = {
-        };
+        var runDependencyTracking = {};
         function addRunDependency(id) {
             runDependencies++;
             if (Module["monitorRunDependencies"]) Module["monitorRunDependencies"](runDependencies);
@@ -458,13 +450,13 @@ var $c0aee7a0d0b12351$var$Module = (()=>{
                     for(var dep in runDependencyTracking){
                         if (!shown) {
                             shown = true;
-                            err1("still waiting on run dependencies:");
+                            err("still waiting on run dependencies:");
                         }
-                        err1("dependency: " + dep);
+                        err("dependency: " + dep);
                     }
-                    if (shown) err1("(end of list)");
-                }, 10000);
-            } else err1("warning: run dependency added without ID");
+                    if (shown) err("(end of list)");
+                }, 1e4);
+            } else err("warning: run dependency added without ID");
         }
         function removeRunDependency(id) {
             runDependencies--;
@@ -472,7 +464,7 @@ var $c0aee7a0d0b12351$var$Module = (()=>{
             if (id) {
                 assert(runDependencyTracking[id]);
                 delete runDependencyTracking[id];
-            } else err1("warning: run dependency removed without ID");
+            } else err("warning: run dependency removed without ID");
             if (runDependencies == 0) {
                 if (runDependencyWatcher !== null) {
                     clearInterval(runDependencyWatcher);
@@ -488,7 +480,7 @@ var $c0aee7a0d0b12351$var$Module = (()=>{
         function abort(what) {
             if (Module["onAbort"]) Module["onAbort"](what);
             what = "Aborted(" + what + ")";
-            err1(what);
+            err(what);
             ABORT = true;
             EXITSTATUS = 1;
             var e = new WebAssembly.RuntimeError(what);
@@ -550,7 +542,7 @@ var $c0aee7a0d0b12351$var$Module = (()=>{
             };
         }
         var wasmBinaryFile;
-        wasmBinaryFile = "data:application/octet-stream;base64,AGFzbQEAAAABJgdgAAF/YAN/f38Bf2ABfwF/YAR/f39/AGAAAGABfwBgA39+fwF+Aw8OBAMDAQECAAUCAAAAAgAEBQFwAQEBBQYBAYACgAIGEwN/AUGQiMACC38BQQALfwFBAAsH4QIRBm1lbW9yeQIAEV9fd2FzbV9jYWxsX2N0b3JzAAATemlnemFnX2RlbHRhX2VuY29kZQABE3ppZ3phZ19kZWx0YV9kZWNvZGUAAhJzdHJlYW12Ynl0ZV9lbmNvZGUAAxJzdHJlYW12Ynl0ZV9kZWNvZGUABB9zdHJlYW12Ynl0ZV9tYXhfY29tcHJlc3NlZGJ5dGVzAAUZX19pbmRpcmVjdF9mdW5jdGlvbl90YWJsZQEAEF9fZXJybm9fbG9jYXRpb24ADQZmZmx1c2gADBVlbXNjcmlwdGVuX3N0YWNrX2luaXQAABllbXNjcmlwdGVuX3N0YWNrX2dldF9mcmVlAAkZZW1zY3JpcHRlbl9zdGFja19nZXRfYmFzZQAKGGVtc2NyaXB0ZW5fc3RhY2tfZ2V0X2VuZAALCXN0YWNrU2F2ZQAGDHN0YWNrUmVzdG9yZQAHCnN0YWNrQWxsb2MACAqdCQ4OAEGQiMACJAJBkAgkAQvyAQICfwJ7AkAgAkUNACACQQRPBEAgAkF8cSEEIAP9ECEGQQAhAwNAIAEgA0ECdGogACADQQF0av1dAQAiByAH/Q0AAQABAgMAAQQFAAEGBwABQRD9qwFBEP2sASAGIAf9DQYHAAEQEQABEhMAARQVAAFBEP2rAUEQ/awB/bEBIgZBAf2rASAGQR/9rAH9Uf0LAgAgByEGIANBBGoiAyAERw0ACyACIARGDQEgBv0ZAyEDCwNAIANBEHQhBSABIARBAnRqIAAgBEEBdGouAQAiAyAFQRB1ayIFQQF0IAVBH3VzNgIAIARBAWoiBCACRw0ACwsLrwEBBH8CQCACRQ0AIAJBAUcEQCACQX5xIQcDQCABIARBAnQiBWogAyAAIAVqKAIAIgNBAXZBACADQQFxa3NqIgM2AgAgASAFQQRyIgVqIAMgACAFaigCACIDQQF2QQAgA0EBcWtzaiIDNgIAIARBAmohBCAGQQJqIgYgB0cNAAsLIAJBAXFFDQAgASAEQQJ0IgJqIAAgAmooAgAiAEEBdkEAIABBAXFrcyADajYCAAsL5AEBCH8gAiABQQNqQQJ2aiEEIAEEQCACIQYDQCADQf8BcUEIRwR/IAMFIAYgBToAACAGQQFqIQZBACEFQQALIQkCfyAAIAhBAnRqKAIAIgNB/wFNBEAgBCADOgAAQQEhB0EADAELIANB//8DTQRAIAQgAzsAAEECIQdBAQwBCyADQf///wdNBEAgBCADOwAAIAQgA0EQdjoAAkEDIQdBAgwBCyAEIAM2AABBBCEHQQMLIQogCUECaiEDIAQgB2ohBCAFIAogCXRyIQUgCEEBaiIIIAFHDQALIAYgBToAAAsgBCACawvNAQEGfyACRQRAQQAPCyAAQQFqIQYgACACQQNqQQJ2aiEDIAAtAAAhBwNAIARB/wFxQQhGBEAgBi0AACEHIAZBAWohBkEAIQQLIAECfyAHIAR2QQNxIgVBA0cEQAJAAkACQCAFQQFrDgIBAgALQQEhBSADLQAADAMLQQIhBSADLwAADAILQQMhBSADLwAAIAMtAAJBEHRyDAELQQQhBSADKAAACzYCACAEQQJqIQQgAUEEaiEBIAMgBWohAyAIQQFqIgggAkcNAAsgAyAAawsTACAAQQJ0IABBA2pBAnZqQRBqCwQAIwALBgAgACQACxAAIwAgAGtBcHEiACQAIAALBwAjACMBawsEACMCCwQAIwEL6AEBA38gAEUEQEGICCgCAARAQYgIKAIAEAwhAQtBiAgoAgAEQEGICCgCABAMIAFyIQELQYQIKAIAIgAEQANAIAAoAkwaIAAoAhQgACgCHEcEQCAAEAwgAXIhAQsgACgCOCIADQALCyABDwsgACgCTEEATiECAkACQCAAKAIUIAAoAhxGDQAgAEEAQQAgACgCJBEBABogACgCFA0AQX8hAQwBCyAAKAIEIgEgACgCCCIDRwRAIAAgASADa6xBASAAKAIoEQYAGgtBACEBIABBADYCHCAAQgA3AxAgAEIANwIEIAJFDQALIAELBQBBjAgL";
+        wasmBinaryFile = "data:application/octet-stream;base64,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";
         if (!isDataURI(wasmBinaryFile)) wasmBinaryFile = locateFile(wasmBinaryFile);
         function getBinary(file) {
             try {
@@ -614,8 +606,8 @@ var $c0aee7a0d0b12351$var$Module = (()=>{
                 }).then(function(instance) {
                     return instance;
                 }).then(receiver, function(reason) {
-                    err1("failed to asynchronously prepare wasm: " + reason);
-                    if (isFileURI(wasmBinaryFile)) err1("warning: Loading from a file URI (" + wasmBinaryFile + ") is not supported in most browsers. See https://emscripten.org/docs/getting_started/FAQ.html#how-do-i-run-a-local-webserver-for-testing-why-does-my-program-stall-in-downloading-or-preparing");
+                    err("failed to asynchronously prepare wasm: " + reason);
+                    if (isFileURI(wasmBinaryFile)) err("warning: Loading from a file URI (" + wasmBinaryFile + ") is not supported in most browsers. See https://emscripten.org/docs/getting_started/FAQ.html#how-do-i-run-a-local-webserver-for-testing-why-does-my-program-stall-in-downloading-or-preparing");
                     abort(reason);
                 });
             }
@@ -625,23 +617,22 @@ var $c0aee7a0d0b12351$var$Module = (()=>{
                 }).then(function(response) {
                     var result = WebAssembly.instantiateStreaming(response, info);
                     return result.then(receiveInstantiationResult, function(reason) {
-                        err1("wasm streaming compile failed: " + reason);
-                        err1("falling back to ArrayBuffer instantiation");
+                        err("wasm streaming compile failed: " + reason);
+                        err("falling back to ArrayBuffer instantiation");
                         return instantiateArrayBuffer(receiveInstantiationResult);
                     });
                 });
                 else return instantiateArrayBuffer(receiveInstantiationResult);
             }
             if (Module["instantiateWasm"]) try {
-                var exports1 = Module["instantiateWasm"](info, receiveInstance);
-                return exports1;
+                var exports = Module["instantiateWasm"](info, receiveInstance);
+                return exports;
             } catch (e) {
-                err1("Module.instantiateWasm callback failed with error: " + e);
+                err("Module.instantiateWasm callback failed with error: " + e);
                 readyPromiseReject(e);
             }
             instantiateAsync().catch(readyPromiseReject);
-            return {
-            };
+            return {};
         }
         var tempDouble;
         var tempI64;
@@ -652,6 +643,17 @@ var $c0aee7a0d0b12351$var$Module = (()=>{
         }
         function callRuntimeCallbacks(callbacks) {
             while(callbacks.length > 0)callbacks.shift()(Module);
+        }
+        function demangle(func) {
+            warnOnce("warning: build with -sDEMANGLE_SUPPORT to link in libcxxabi demangling");
+            return func;
+        }
+        function demangleAll(text) {
+            var regex = /\b_Z[\w\d_]+/g;
+            return text.replace(regex, function(x) {
+                var y = demangle(x);
+                return x === y ? x : y + " [" + x + "]";
+            });
         }
         function intArrayToString(array) {
             var ret = [];
@@ -665,23 +667,34 @@ var $c0aee7a0d0b12351$var$Module = (()=>{
             }
             return ret.join("");
         }
+        function jsStackTrace() {
+            var error = new Error;
+            if (!error.stack) {
+                try {
+                    throw new Error;
+                } catch (e) {
+                    error = e;
+                }
+                if (!error.stack) return "(no stack trace available)";
+            }
+            return error.stack.toString();
+        }
         function warnOnce(text) {
-            if (!warnOnce.shown) warnOnce.shown = {
-            };
+            if (!warnOnce.shown) warnOnce.shown = {};
             if (!warnOnce.shown[text]) {
                 warnOnce.shown[text] = 1;
                 if (ENVIRONMENT_IS_NODE) text = "warning: " + text;
-                err1(text);
+                err(text);
             }
+        }
+        function writeArrayToMemory(array, buffer) {
+            assert(array.length >= 0, "writeArrayToMemory array must have a length (should be an array or typed array)");
+            HEAP8.set(array, buffer);
         }
         function getCFunc(ident) {
             var func = Module["_" + ident];
             assert(func, "Cannot call unknown function " + ident + ", make sure it is exported");
             return func;
-        }
-        function writeArrayToMemory(array, buffer) {
-            assert(array.length >= 0, "writeArrayToMemory array must have a length (should be an array or typed array)");
-            HEAP8.set(array, buffer);
         }
         function ccall(ident, returnType, argTypes, args, opts) {
             var toC = {
@@ -716,13 +729,13 @@ var $c0aee7a0d0b12351$var$Module = (()=>{
                     cArgs[i] = converter(args[i]);
                 } else cArgs[i] = args[i];
             }
-            var ret1 = func.apply(null, cArgs);
+            var ret = func.apply(null, cArgs);
             function onDone(ret) {
                 if (stack !== 0) stackRestore(stack);
                 return convertReturnValue(ret);
             }
-            ret1 = onDone(ret1);
-            return ret1;
+            ret = onDone(ret);
+            return ret;
         }
         function cwrap(ident, returnType, argTypes, opts) {
             return function() {
@@ -748,7 +761,7 @@ var $c0aee7a0d0b12351$var$Module = (()=>{
                 output = output + String.fromCharCode(chr1);
                 if (enc3 !== 64) output = output + String.fromCharCode(chr2);
                 if (enc4 !== 64) output = output + String.fromCharCode(chr3);
-            }while (i < input.length)
+            }while (i < input.length);
             return output;
         };
         function intArrayFromBase64(s) {
@@ -772,9 +785,8 @@ var $c0aee7a0d0b12351$var$Module = (()=>{
         function checkIncomingModuleAPI() {
             ignoredModuleProp("fetchSettings");
         }
-        var asmLibraryArg = {
-        };
-        var asm1 = createWasm();
+        var asmLibraryArg = {};
+        var asm = createWasm();
         var ___wasm_call_ctors = Module["___wasm_call_ctors"] = createExportWrapper("__wasm_call_ctors");
         var _zigzag_delta_encode = Module["_zigzag_delta_encode"] = createExportWrapper("zigzag_delta_encode");
         var _zigzag_delta_decode = Module["_zigzag_delta_decode"] = createExportWrapper("zigzag_delta_decode");
@@ -828,8 +840,8 @@ var $c0aee7a0d0b12351$var$Module = (()=>{
             "registerFunctions",
             "prettyPrint",
             "getCompilerSetting",
-            "out",
-            "err",
+            "print",
+            "printErr",
             "callMain",
             "abort",
             "keepRuntimeAlive",
@@ -848,7 +860,6 @@ var $c0aee7a0d0b12351$var$Module = (()=>{
             "stringToNewUTF8",
             "exitJS",
             "getHeapMax",
-            "abortOnCannotGrowMemory",
             "emscripten_realloc_buffer",
             "ENV",
             "ERRNO_CODES",
@@ -1051,7 +1062,6 @@ var $c0aee7a0d0b12351$var$Module = (()=>{
             "stringToNewUTF8",
             "exitJS",
             "getHeapMax",
-            "abortOnCannotGrowMemory",
             "emscripten_realloc_buffer",
             "setErrNo",
             "inetPton4",
@@ -1074,7 +1084,6 @@ var $c0aee7a0d0b12351$var$Module = (()=>{
             "dynCallLegacy",
             "getDynCaller",
             "dynCall",
-            "handleException",
             "runtimeKeepalivePush",
             "runtimeKeepalivePop",
             "callUserCallback",
@@ -1164,10 +1173,6 @@ var $c0aee7a0d0b12351$var$Module = (()=>{
             "registerBatteryEventCallback",
             "setCanvasElementSize",
             "getCanvasElementSize",
-            "demangle",
-            "demangleAll",
-            "jsStackTrace",
-            "stackTrace",
             "getEnvStrings",
             "checkWasiClock",
             "flush_NO_FILESYSTEM",
@@ -1281,34 +1286,34 @@ $b0e90092f9853fbf$var$Module.then((mod)=>{
     $b0e90092f9853fbf$var$stackRestore = mod.stackRestore;
     $b0e90092f9853fbf$var$stackAlloc = mod.stackAlloc;
     $b0e90092f9853fbf$var$writeArrayToMemory = mod.writeArrayToMemory;
-    $b0e90092f9853fbf$var$zigzag_delta_encode = mod.cwrap('zigzag_delta_encode', null, [
-        'number',
-        'number',
-        'number',
-        'number'
+    $b0e90092f9853fbf$var$zigzag_delta_encode = mod.cwrap("zigzag_delta_encode", null, [
+        "number",
+        "number",
+        "number",
+        "number"
     ]);
-    $b0e90092f9853fbf$var$zigzag_delta_decode = mod.cwrap('zigzag_delta_decode', null, [
-        'number',
-        'number',
-        'number',
-        'number'
+    $b0e90092f9853fbf$var$zigzag_delta_decode = mod.cwrap("zigzag_delta_decode", null, [
+        "number",
+        "number",
+        "number",
+        "number"
     ]);
-    $b0e90092f9853fbf$var$streamvbyte_encode = mod.cwrap('streamvbyte_encode', 'number', [
-        'number',
-        'number',
-        'number'
+    $b0e90092f9853fbf$var$streamvbyte_encode = mod.cwrap("streamvbyte_encode", "number", [
+        "number",
+        "number",
+        "number"
     ]);
-    $b0e90092f9853fbf$var$streamvbyte_decode = mod.cwrap('streamvbyte_decode', 'number', [
-        'number',
-        'number',
-        'number'
+    $b0e90092f9853fbf$var$streamvbyte_decode = mod.cwrap("streamvbyte_decode", "number", [
+        "number",
+        "number",
+        "number"
     ]);
-    $b0e90092f9853fbf$var$streamvbyte_max_compressedbytes = mod.cwrap('streamvbyte_max_compressedbytes', 'number', [
-        'number'
+    $b0e90092f9853fbf$var$streamvbyte_max_compressedbytes = mod.cwrap("streamvbyte_max_compressedbytes", "number", [
+        "number"
     ]);
-}); // Compress an Int??Array.
-function $b0e90092f9853fbf$var$compress(to_compress, options = {
-}) {
+});
+// Compress an Int??Array.
+function $b0e90092f9853fbf$var$compress(to_compress, options = {}) {
     const stack_top = $b0e90092f9853fbf$var$stackSave();
     try {
         let compressed_out = null;
@@ -1323,7 +1328,8 @@ function $b0e90092f9853fbf$var$compress(to_compress, options = {
                 $b0e90092f9853fbf$var$zigzag_delta_encode(in_buffer_ptr, to_encode_buffer_ptr, to_compress.length, 0);
             } else {
                 assert(false); // need to actualy upcast to 32 bit ints here...
-                throw "Didn't write this yet"; //writeArrayToMemory(new Int8Array(to_compress.buffer), to_encode_buffer_ptr);
+                throw "Didn't write this yet";
+            //writeArrayToMemory(new Int8Array(to_compress.buffer), to_encode_buffer_ptr);
             }
             const out_buffer_capacity = to_compress.length * 6; // total guess.
             const out_buffer_ptr = $b0e90092f9853fbf$var$stackAlloc(out_buffer_capacity);
@@ -1341,8 +1347,7 @@ function $b0e90092f9853fbf$var$compress(to_compress, options = {
         $b0e90092f9853fbf$var$stackRestore(stack_top);
     }
 }
-function $b0e90092f9853fbf$var$compress_with_size(to_compress, options = {
-}) {
+function $b0e90092f9853fbf$var$compress_with_size(to_compress, options = {}) {
     const compressed = $b0e90092f9853fbf$var$compress(to_compress, options);
     let buffer = new ArrayBuffer(compressed.length + 4);
     let data_section = new Int8Array(buffer, 4, compressed.length);
@@ -1351,8 +1356,7 @@ function $b0e90092f9853fbf$var$compress_with_size(to_compress, options = {
     data_section.set(compressed);
     return new Int8Array(buffer);
 }
-function $b0e90092f9853fbf$var$decompress(to_decompress, out_size, options = {
-}) {
+function $b0e90092f9853fbf$var$decompress(to_decompress, out_size, options = {}) {
     const stack_top = $b0e90092f9853fbf$var$stackSave();
     try {
         let decompressed_out = to_decompress;
@@ -1375,7 +1379,8 @@ function $b0e90092f9853fbf$var$decompress(to_decompress, out_size, options = {
                 decompressed_out = new Int16Array(decompressed_buffer_cast);
             } else {
                 assert(false); // need to actualy cast to 16 bit ints here...
-                throw "Didn't write this yet"; //writeArrayToMemory(new Int8Array(to_compress.buffer), to_encode_buffer_ptr);
+                throw "Didn't write this yet";
+            //writeArrayToMemory(new Int8Array(to_compress.buffer), to_encode_buffer_ptr);
             }
         }
         return decompressed_out;
@@ -1383,8 +1388,7 @@ function $b0e90092f9853fbf$var$decompress(to_decompress, out_size, options = {
         $b0e90092f9853fbf$var$stackRestore(stack_top);
     }
 }
-function $b0e90092f9853fbf$var$decompress_with_size(to_decompress, options = {
-}) {
+function $b0e90092f9853fbf$var$decompress_with_size(to_decompress, options = {}) {
     let data_section = new Int8Array(to_decompress, 4, to_decompress.byteLength - 4);
     let header_section = new Int32Array(to_decompress, 0, 1);
     let outSizeBits = header_section[0];
@@ -1404,8 +1408,7 @@ const $b0e90092f9853fbf$export$612534c750e55a8b = {
 
 
 let $690dfc9e93e1337c$var$ZSTD = null;
-$gYrdT$zstdcodec.ZstdCodec.run((zstd)=>$690dfc9e93e1337c$var$ZSTD = zstd
-);
+(0, $gYrdT$zstdcodec.ZstdCodec).run((zstd)=>$690dfc9e93e1337c$var$ZSTD = zstd);
 const $690dfc9e93e1337c$export$678d868aab8fb3c7 = (d, options = null)=>{
     const decompressed = $690dfc9e93e1337c$var$decompressWithZSTD(d, options);
     const myVal = decompressed.buffer;
@@ -1413,17 +1416,16 @@ const $690dfc9e93e1337c$export$678d868aab8fb3c7 = (d, options = null)=>{
 };
 const $690dfc9e93e1337c$var$decompressWithZSTD = (d, options)=>{
     options.zstd = $690dfc9e93e1337c$var$ZSTD;
-    const decomp = $b0e90092f9853fbf$export$612534c750e55a8b.decompress_with_size(d, options);
+    const decomp = (0, $b0e90092f9853fbf$export$612534c750e55a8b).decompress_with_size(d, options);
     return decomp;
 };
 const $690dfc9e93e1337c$var$compress = (d, options)=>{
     options.zstd = $690dfc9e93e1337c$var$ZSTD;
-    const comp = $b0e90092f9853fbf$export$612534c750e55a8b.compress_with_size(d, options);
+    const comp = (0, $b0e90092f9853fbf$export$612534c750e55a8b).compress_with_size(d, options);
     return comp;
 };
-if (typeof window === 'object') {
-    $gYrdT$zstdcodec.ZstdCodec.run((zstd)=>window.zstd = zstd
-    );
+if (typeof window === "object") {
+    (0, $gYrdT$zstdcodec.ZstdCodec).run((zstd)=>window.zstd = zstd);
     window.vbzjs = {
         vbz: $b0e90092f9853fbf$export$612534c750e55a8b,
         decompress: $690dfc9e93e1337c$export$678d868aab8fb3c7,
