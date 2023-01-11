@@ -1,6 +1,40 @@
-const streamvbyte = require('./dist/streamvbyte.mjs');
+import { simd } from "wasm-feature-detect";
+let streamvbyte;
+let Module;
 
-const Module = streamvbyte.default();
+let zigzag_delta_encode = null;
+let zigzag_delta_decode = null;
+let streamvbyte_encode = null;
+let streamvbyte_decode = null;
+let stackSave = null;
+let stackRestore = null;
+let stackAlloc = null;
+let writeArrayToMemory = null;
+let wasmMemory = null;
+let streamvbyte_max_compressedbytes = null;
+
+(async () => {
+    const simdSupported = await simd();
+    if (simdSupported){
+        streamvbyte = require('./dist/streamvbyte.mjs');
+    } else {
+        streamvbyte = require('./dist/streamvbyte-no-simd.mjs');
+    }
+    Module = streamvbyte.default();
+
+    Module.then((mod) => {
+        wasmMemory = mod.asm.memory;
+        stackSave = mod.stackSave;
+        stackRestore = mod.stackRestore;
+        stackAlloc = mod.stackAlloc;
+        writeArrayToMemory = mod.writeArrayToMemory;
+        zigzag_delta_encode = mod.cwrap('zigzag_delta_encode', null, ['number', 'number', 'number', 'number']);
+        zigzag_delta_decode = mod.cwrap('zigzag_delta_decode', null, ['number', 'number', 'number', 'number']);
+        streamvbyte_encode = mod.cwrap('streamvbyte_encode', 'number', ['number', 'number', 'number']);
+        streamvbyte_decode = mod.cwrap('streamvbyte_decode', 'number', ['number', 'number', 'number']);
+        streamvbyte_max_compressedbytes = mod.cwrap('streamvbyte_max_compressedbytes', 'number', ['number']);
+    });
+})();
 
 class VbzOptions {
     constructor(perform_delta_zig_zag, integer_size, zstd_compression_level, vbz_version, zstd) {
@@ -27,30 +61,6 @@ class VbzOptions {
         }
     }
 };
-
-let zigzag_delta_encode = null;
-let zigzag_delta_decode = null;
-let streamvbyte_encode = null;
-let streamvbyte_decode = null;
-let stackSave = null;
-let stackRestore = null;
-let stackAlloc = null;
-let writeArrayToMemory = null;
-let wasmMemory = null;
-let streamvbyte_max_compressedbytes = null;
-
-Module.then((mod) => {
-    wasmMemory = mod.asm.memory;
-    stackSave = mod.stackSave;
-    stackRestore = mod.stackRestore;
-    stackAlloc = mod.stackAlloc;
-    writeArrayToMemory = mod.writeArrayToMemory;
-    zigzag_delta_encode = mod.cwrap('zigzag_delta_encode', null, ['number', 'number', 'number', 'number']);
-    zigzag_delta_decode = mod.cwrap('zigzag_delta_decode', null, ['number', 'number', 'number', 'number']);
-    streamvbyte_encode = mod.cwrap('streamvbyte_encode', 'number', ['number', 'number', 'number']);
-    streamvbyte_decode = mod.cwrap('streamvbyte_decode', 'number', ['number', 'number', 'number']);
-    streamvbyte_max_compressedbytes = mod.cwrap('streamvbyte_max_compressedbytes', 'number', ['number']);
-});
 
 // Compress an Int??Array.
 function compress(to_compress, options = {}) {

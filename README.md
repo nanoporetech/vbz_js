@@ -15,6 +15,20 @@ Build
 cd streamvbyte
 .build.sh
 ```
+
+Build No SIMD File: 
+1. Remove the line below from streamvbyte_wasm.c
+
+```
+#include <xmmintrin.h>
+```
+
+2. Build
+```
+cd streamvbyte
+.build-no-simd.sh
+```
+
 # Testing
 Run tests via jest
 To do: Move all tests from test_script.js to vbz.test.js
