@@ -1,17 +1,13 @@
 {
   "name": "vbzjs",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "private": true,
   "main": "./dist/bundle.js",
   "path": "./dist",
   "url": "/",
   "targets": {
-    "browser": {
-      "context": "browser",
-      "outputFormat": "commonjs"
-    },
     "main": {
-      "context": "node",
+      "context": "browser",
       "engines": {
         "node": ">= 16.0.0"
       }
