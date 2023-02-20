@@ -1211,10 +1211,6 @@ function $8b06983e393eef12$var$decompress(to_decompress, out_size, options = {})
             $8b06983e393eef12$var$writeArrayToMemory(new Int8Array(decompressed_out), encoded_buffer_ptr);
             const decoded_size = $8b06983e393eef12$var$streamvbyte_max_compressedbytes(out_size);
             const decoded_buffer_ptr = $8b06983e393eef12$var$stackAlloc(decoded_size);
-            console.log("in_size", in_size);
-            console.log("out_size", out_size);
-            console.log("encoded_buffer_ptr", encoded_buffer_ptr);
-            console.log("decoded_buffer_ptr", decoded_buffer_ptr);
             const out_buffer_size = $8b06983e393eef12$var$streamvbyte_decode(encoded_buffer_ptr, decoded_buffer_ptr, out_size);
             if (options.perform_delta_zig_zag) {
                 const decompressed_buffer_size = out_size * options.integer_size;
