@@ -179,11 +179,6 @@ function decompress(to_decompress, out_size, options = {}) {
       const decoded_size = streamvbyte_max_compressedbytes(out_size);
       const decoded_buffer_ptr = stackAlloc(decoded_size);
 
-      console.log("in_size", in_size);
-      console.log("out_size", out_size);
-      console.log("encoded_buffer_ptr", encoded_buffer_ptr);
-      console.log("decoded_buffer_ptr", decoded_buffer_ptr);
-
       const out_buffer_size = streamvbyte_decode(
         encoded_buffer_ptr,
         decoded_buffer_ptr,
