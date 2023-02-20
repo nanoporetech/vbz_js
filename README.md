@@ -3,36 +3,37 @@
 JS bindings for [VBZ Compression](https://github.com/nanoporetech/vbz_compression).
 
 # Dependencies
+
 EMCC - https://emscripten.org/docs/getting_started/downloads.html
 
 Tip: If installed but EMCC not found in VSCode, download the repo, cd into it and activate the env vars:
+
 ```
 source ./emsdk_env.sh
 ```
 
-Build
-```
+# Build
+
+```bash
 cd streamvbyte
-.build.sh
+./build.sh
+cd ..
+npm run build:node
 ```
 
-Build No SIMD File: 
-1. Remove the line below from streamvbyte_wasm.c
+Currently the no SIMD version has been dropped. To build:
 
 ```
-#include <xmmintrin.h>
-```
-
-2. Build
-```
-cd streamvbyte
-.build-no-simd.sh
+# Remove the line `#include <xmmintrin.h>` from streamvbyte_wasm.c
+./build-no-simd.sh
 ```
 
 # Testing
+
 Run tests via jest
 To do: Move all tests from test_script.js to vbz.test.js
+
 ```
-yarn build:test
-yarn test
+npm run build:test
+npm run test
 ```
