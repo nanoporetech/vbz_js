@@ -61,6 +61,8 @@ var $50ed3c96df748c7a$var$Module = (()=>{
             readyPromiseReject = reject;
         });
         [
+            "_malloc",
+            "_free",
             "_zigzag_delta_encode",
             "_zigzag_delta_decode",
             "_streamvbyte_encode",
@@ -490,7 +492,7 @@ var $50ed3c96df748c7a$var$Module = (()=>{
             };
         }
         var wasmBinaryFile;
-        wasmBinaryFile = "data:application/octet-stream;base64,AGFzbQEAAAABJgdgAAF/YAN/f38Bf2ABfwF/YAR/f39/AGAAAGABfwBgA39+fwF+Aw8OBAMDAQECAAUCAAAAAgAEBQFwAQEBBQcBAYAEgIACBhMDfwFBkIiACAt/AUEAC38BQQALB4ADEgZtZW1vcnkCABFfX3dhc21fY2FsbF9jdG9ycwAAE3ppZ3phZ19kZWx0YV9lbmNvZGUAARN6aWd6YWdfZGVsdGFfZGVjb2RlAAISc3RyZWFtdmJ5dGVfZW5jb2RlAAMSc3RyZWFtdmJ5dGVfZGVjb2RlAAQfc3RyZWFtdmJ5dGVfbWF4X2NvbXByZXNzZWRieXRlcwAFGV9faW5kaXJlY3RfZnVuY3Rpb25fdGFibGUBABBfX2Vycm5vX2xvY2F0aW9uAA0GZmZsdXNoAAwVZW1zY3JpcHRlbl9zdGFja19pbml0AAAZZW1zY3JpcHRlbl9zdGFja19nZXRfZnJlZQAJGWVtc2NyaXB0ZW5fc3RhY2tfZ2V0X2Jhc2UAChhlbXNjcmlwdGVuX3N0YWNrX2dldF9lbmQACwlzdGFja1NhdmUABgxzdGFja1Jlc3RvcmUABwpzdGFja0FsbG9jAAgcZW1zY3JpcHRlbl9zdGFja19nZXRfY3VycmVudAAGCo8JDg4AQZCIgAgkAkGQCCQBC+0BAgJ/AnsCQCACRQ0AIAJBBE8EQCACQXxxIQQgA/0QIQZBACEDA0AgASADQQJ0aiAAIANBAXRq/V0BACIHIAf9DQABAAECAwABBAUAAQYHAAFBEP2rAUEQ/awBIAYgB/0NBgcAARARAAESEwABFBUAAUEQ/asBQRD9rAH9sQEiBkEB/asBIAZBH/2sAf1R/QsCACAHIQYgA0EEaiIDIARHDQALIAIgBEYNASAG/RkDIQMLA0AgASAEQQJ0aiAAIARBAXRqLgEAIgUgA8FrIgNBAXQgA0EfdXM2AgAgBSEDIARBAWoiBCACRw0ACwsLrwEBBH8CQCACRQ0AIAJBAUcEQCACQX5xIQcDQCABIARBAnQiBWogAyAAIAVqKAIAIgNBAXZBACADQQFxa3NqIgM2AgAgASAFQQRyIgVqIAMgACAFaigCACIDQQF2QQAgA0EBcWtzaiIDNgIAIARBAmohBCAGQQJqIgYgB0cNAAsLIAJBAXFFDQAgASAEQQJ0IgJqIAAgAmooAgAiAEEBdkEAIABBAXFrcyADajYCAAsL5AEBCH8gAiABQQNqQQJ2aiEEIAEEQCACIQYDQCADQf8BcUEIRwR/IAMFIAYgBToAACAGQQFqIQZBACEFQQALIQkCfyAAIAhBAnRqKAIAIgNB/wFNBEAgBCADOgAAQQEhB0EADAELIANB//8DTQRAIAQgAzsAAEECIQdBAQwBCyADQf///wdNBEAgBCADOwAAIAQgA0EQdjoAAkEDIQdBAgwBCyAEIAM2AABBBCEHQQMLIQogCUECaiEDIAQgB2ohBCAFIAogCXRyIQUgCEEBaiIIIAFHDQALIAYgBToAAAsgBCACawvEAQEGfyACRQRAQQAPCyAAQQFqIQYgACACQQNqQQJ2aiEDIAAtAAAhBwNAIARB/wFxQQhGBEAgBi0AACEHIAZBAWohBkEAIQQLIAECfwJAAkACQAJAIAcgBHZBA3EOAwABAgMLQQEhBSADLQAADAMLQQIhBSADLwAADAILQQMhBSADLwAAIAMtAAJBEHRyDAELQQQhBSADKAAACzYCACAEQQJqIQQgAUEEaiEBIAMgBWohAyAIQQFqIgggAkcNAAsgAyAAawsTACAAQQJ0IABBA2pBAnZqQRBqCwQAIwALBgAgACQACxAAIwAgAGtBcHEiACQAIAALBwAjACMBawsEACMCCwQAIwEL6AEBA38gAEUEQEGICCgCAARAQYgIKAIAEAwhAQtBiAgoAgAEQEGICCgCABAMIAFyIQELQYQIKAIAIgAEQANAIAAoAkwaIAAoAhQgACgCHEcEQCAAEAwgAXIhAQsgACgCOCIADQALCyABDwsgACgCTEEATiECAkACQCAAKAIUIAAoAhxGDQAgAEEAQQAgACgCJBEBABogACgCFA0AQX8hAQwBCyAAKAIEIgEgACgCCCIDRwRAIAAgASADa6xBASAAKAIoEQYAGgtBACEBIABBADYCHCAAQgA3AxAgAEIANwIEIAJFDQALIAELBQBBjAgL";
+        wasmBinaryFile = "data:application/octet-stream;base64,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";
         if (!isDataURI(wasmBinaryFile)) wasmBinaryFile = locateFile(wasmBinaryFile);
         function getBinary(file) {
             try {
@@ -657,6 +659,39 @@ var $50ed3c96df748c7a$var$Module = (()=>{
                 err(text);
             }
         }
+        function getHeapMax() {
+            return 2147483648;
+        }
+        function emscripten_realloc_buffer(size) {
+            var b = wasmMemory.buffer;
+            try {
+                wasmMemory.grow(size - b.byteLength + 65535 >>> 16);
+                updateMemoryViews();
+                return 1;
+            } catch (e) {
+                err("emscripten_realloc_buffer: Attempted to grow heap from " + b.byteLength + " bytes to " + size + " bytes, but got error: " + e);
+            }
+        }
+        function _emscripten_resize_heap(requestedSize) {
+            var oldSize = HEAPU8.length;
+            requestedSize = requestedSize >>> 0;
+            assert(requestedSize > oldSize);
+            var maxHeapSize = getHeapMax();
+            if (requestedSize > maxHeapSize) {
+                err("Cannot enlarge memory, asked to go up to " + requestedSize + " bytes, but the limit is " + maxHeapSize + " bytes!");
+                return false;
+            }
+            let alignUp = (x, multiple)=>x + (multiple - x % multiple) % multiple;
+            for(var cutDown = 1; cutDown <= 4; cutDown *= 2){
+                var overGrownHeapSize = oldSize * (1 + .2 / cutDown);
+                overGrownHeapSize = Math.min(overGrownHeapSize, requestedSize + 100663296);
+                var newSize = Math.min(maxHeapSize, alignUp(Math.max(requestedSize, overGrownHeapSize), 65536));
+                var replacement = emscripten_realloc_buffer(newSize);
+                if (replacement) return true;
+            }
+            err("Failed to grow the heap from " + oldSize + " bytes to " + newSize + " bytes, not enough memory!");
+            return false;
+        }
         function getCFunc(ident) {
             var func = Module["_" + ident];
             assert(func, "Cannot call unknown function " + ident + ", make sure it is exported");
@@ -750,7 +785,9 @@ var $50ed3c96df748c7a$var$Module = (()=>{
         function checkIncomingModuleAPI() {
             ignoredModuleProp("fetchSettings");
         }
-        var wasmImports = {};
+        var wasmImports = {
+            "emscripten_resize_heap": _emscripten_resize_heap
+        };
         var asm = createWasm();
         var ___wasm_call_ctors = createExportWrapper("__wasm_call_ctors");
         var _zigzag_delta_encode = Module["_zigzag_delta_encode"] = createExportWrapper("zigzag_delta_encode");
@@ -760,6 +797,8 @@ var $50ed3c96df748c7a$var$Module = (()=>{
         var _streamvbyte_max_compressedbytes = Module["_streamvbyte_max_compressedbytes"] = createExportWrapper("streamvbyte_max_compressedbytes");
         var ___errno_location = createExportWrapper("__errno_location");
         var _fflush = Module["_fflush"] = createExportWrapper("fflush");
+        var _malloc = Module["_malloc"] = createExportWrapper("malloc");
+        var _free = Module["_free"] = createExportWrapper("free");
         var _emscripten_stack_init = function() {
             return (_emscripten_stack_init = Module["asm"]["emscripten_stack_init"]).apply(null, arguments);
         };
@@ -778,17 +817,12 @@ var $50ed3c96df748c7a$var$Module = (()=>{
         var _emscripten_stack_get_current = function() {
             return (_emscripten_stack_get_current = Module["asm"]["emscripten_stack_get_current"]).apply(null, arguments);
         };
-        Module["stackAlloc"] = stackAlloc;
-        Module["stackSave"] = stackSave;
-        Module["stackRestore"] = stackRestore;
         Module["cwrap"] = cwrap;
         Module["writeArrayToMemory"] = writeArrayToMemory;
         var missingLibrarySymbols = [
             "zeroMemory",
             "stringToNewUTF8",
             "exitJS",
-            "getHeapMax",
-            "emscripten_realloc_buffer",
             "setErrNo",
             "inetPton4",
             "inetNtop4",
@@ -973,6 +1007,9 @@ var $50ed3c96df748c7a$var$Module = (()=>{
             "abort",
             "keepRuntimeAlive",
             "wasmMemory",
+            "stackAlloc",
+            "stackSave",
+            "stackRestore",
             "getTempRet0",
             "setTempRet0",
             "writeStackCookie",
@@ -980,6 +1017,8 @@ var $50ed3c96df748c7a$var$Module = (()=>{
             "intArrayFromBase64",
             "tryParseAsDataURI",
             "ptrToString",
+            "getHeapMax",
+            "emscripten_realloc_buffer",
             "ENV",
             "ERRNO_CODES",
             "ERRNO_MESSAGES",
@@ -1092,9 +1131,8 @@ let $8b06983e393eef12$var$zigzag_delta_encode = null;
 let $8b06983e393eef12$var$zigzag_delta_decode = null;
 let $8b06983e393eef12$var$streamvbyte_encode = null;
 let $8b06983e393eef12$var$streamvbyte_decode = null;
-let $8b06983e393eef12$var$stackSave = null;
-let $8b06983e393eef12$var$stackRestore = null;
-let $8b06983e393eef12$var$stackAlloc = null;
+let $8b06983e393eef12$var$_malloc = null;
+let $8b06983e393eef12$var$_free = null;
 let $8b06983e393eef12$var$writeArrayToMemory = null;
 let $8b06983e393eef12$var$wasmMemory = null;
 let $8b06983e393eef12$var$streamvbyte_max_compressedbytes = null;
@@ -1109,9 +1147,8 @@ let $8b06983e393eef12$var$streamvbyte_max_compressedbytes = null;
     $8b06983e393eef12$var$Module = $8b06983e393eef12$var$streamvbyte.default();
     $8b06983e393eef12$var$Module.then((mod)=>{
         $8b06983e393eef12$var$wasmMemory = mod.asm.memory;
-        $8b06983e393eef12$var$stackSave = mod.stackSave;
-        $8b06983e393eef12$var$stackRestore = mod.stackRestore;
-        $8b06983e393eef12$var$stackAlloc = mod.stackAlloc;
+        $8b06983e393eef12$var$_malloc = mod._malloc;
+        $8b06983e393eef12$var$_malloc = mod._free;
         $8b06983e393eef12$var$writeArrayToMemory = mod.writeArrayToMemory;
         $8b06983e393eef12$var$zigzag_delta_encode = mod.cwrap("zigzag_delta_encode", null, [
             "number",
@@ -1155,38 +1192,33 @@ class $8b06983e393eef12$var$VbzOptions {
 }
 // Compress an Int??Array.
 function $8b06983e393eef12$var$compress(to_compress, options = {}) {
-    const stack_top = $8b06983e393eef12$var$stackSave();
-    try {
-        let compressed_out = null;
-        if (options.integer_size != 0) {
-            if (to_compress.byteLength % options.integer_size != 0) throw new Error(`expected a data view with no remainder for delta zig zag compression ${to_compress.byteLength}/${options.integer_size}`);
-            const to_encode_size = to_compress.length * 4; // encode expects a 32 bit input number
-            const to_encode_buffer_ptr = $8b06983e393eef12$var$stackAlloc(to_encode_size);
-            if (options.perform_delta_zig_zag) {
-                const in_size = to_compress.byteLength;
-                let in_buffer_ptr = $8b06983e393eef12$var$stackAlloc(in_size);
-                $8b06983e393eef12$var$writeArrayToMemory(new Int8Array(to_compress.buffer), in_buffer_ptr);
-                $8b06983e393eef12$var$zigzag_delta_encode(in_buffer_ptr, to_encode_buffer_ptr, to_compress.length, 0);
-            } else {
-                assert(false); // need to actualy upcast to 32 bit ints here...
-                throw "Didn't write this yet";
-            //writeArrayToMemory(new Int8Array(to_compress.buffer), to_encode_buffer_ptr);
-            }
-            const out_buffer_capacity = to_compress.length * 6; // total guess.
-            const out_buffer_ptr = $8b06983e393eef12$var$stackAlloc(out_buffer_capacity);
-            const out_buffer_size = $8b06983e393eef12$var$streamvbyte_encode(to_encode_buffer_ptr, to_compress.length, out_buffer_ptr);
-            compressed_out = new Int8Array($8b06983e393eef12$var$wasmMemory.buffer, out_buffer_ptr, out_buffer_size);
-        }
-        if (options.zstd_compression_level == 0) {
-            let output_copy = new Int8Array(compressed_out.length);
-            output_copy.set(compressed_out);
-            return output_copy;
-        }
-        var zstd_simple = new options.zstd.Simple();
-        return zstd_simple.compress(compressed_out);
-    } finally{
-        $8b06983e393eef12$var$stackRestore(stack_top);
+    let compressed_out = null;
+    if (options.integer_size != 0) {
+        if (to_compress.byteLength % options.integer_size != 0) throw new Error(`expected a data view with no remainder for delta zig zag compression ${to_compress.byteLength}/${options.integer_size}`);
+        const to_encode_size = to_compress.length * 4; // encode expects a 32 bit input number
+        const to_encode_buffer_ptr = $8b06983e393eef12$var$_malloc(to_encode_size);
+        if (options.perform_delta_zig_zag) {
+            const in_size = to_compress.byteLength;
+            const in_buffer_ptr = $8b06983e393eef12$var$_malloc(in_size);
+            $8b06983e393eef12$var$writeArrayToMemory(new Int8Array(to_compress.buffer), in_buffer_ptr);
+            $8b06983e393eef12$var$zigzag_delta_encode(in_buffer_ptr, to_encode_buffer_ptr, to_compress.length, 0);
+            $8b06983e393eef12$var$_free(in_buffer_ptr);
+        } else // need to actually upcast to 32 bit ints here...
+        throw "Didn't write this yet";
+        const out_buffer_capacity = to_compress.length * 6; // total guess.
+        const out_buffer_ptr = $8b06983e393eef12$var$_malloc(out_buffer_capacity);
+        const out_buffer_size = $8b06983e393eef12$var$streamvbyte_encode(to_encode_buffer_ptr, to_compress.length, out_buffer_ptr);
+        $8b06983e393eef12$var$_free(to_encode_buffer_ptr);
+        compressed_out = new Int8Array($8b06983e393eef12$var$wasmMemory.buffer, out_buffer_ptr, out_buffer_size);
+        $8b06983e393eef12$var$_free(out_buffer_ptr);
     }
+    if (options.zstd_compression_level == 0) {
+        let output_copy = new Int8Array(compressed_out.length);
+        output_copy.set(compressed_out);
+        return output_copy;
+    }
+    var zstd_simple = new options.zstd.Simple();
+    return zstd_simple.compress(compressed_out);
 }
 function $8b06983e393eef12$var$compress_with_size(to_compress, options = {}) {
     const compressed = $8b06983e393eef12$var$compress(to_compress, options);
@@ -1198,36 +1230,34 @@ function $8b06983e393eef12$var$compress_with_size(to_compress, options = {}) {
     return new Int8Array(buffer);
 }
 function $8b06983e393eef12$var$decompress(to_decompress, out_size, options = {}) {
-    const stack_top = $8b06983e393eef12$var$stackSave();
-    try {
-        let decompressed_out = to_decompress;
-        if (options.zstd_compression_level != 0) {
-            var zstd_simple = new options.zstd.Simple();
-            decompressed_out = zstd_simple.decompress(decompressed_out);
-        }
-        if (options.integer_size != 0) {
-            const in_size = decompressed_out.byteLength;
-            let encoded_buffer_ptr = $8b06983e393eef12$var$stackAlloc(in_size);
-            $8b06983e393eef12$var$writeArrayToMemory(new Int8Array(decompressed_out), encoded_buffer_ptr);
-            const decoded_size = $8b06983e393eef12$var$streamvbyte_max_compressedbytes(out_size);
-            const decoded_buffer_ptr = $8b06983e393eef12$var$stackAlloc(decoded_size);
-            const out_buffer_size = $8b06983e393eef12$var$streamvbyte_decode(encoded_buffer_ptr, decoded_buffer_ptr, out_size);
-            if (options.perform_delta_zig_zag) {
-                const decompressed_buffer_size = out_size * options.integer_size;
-                let decompressed_buffer_ptr = $8b06983e393eef12$var$stackAlloc(decompressed_buffer_size);
-                $8b06983e393eef12$var$zigzag_delta_decode(decoded_buffer_ptr, decompressed_buffer_ptr, out_size, 0);
-                let decompressed_buffer_cast = new Int32Array($8b06983e393eef12$var$wasmMemory.buffer, decompressed_buffer_ptr, out_size);
-                decompressed_out = new Int16Array(decompressed_buffer_cast);
-            } else {
-                assert(false); // need to actualy cast to 16 bit ints here...
-                throw "Didn't write this yet";
-            //writeArrayToMemory(new Int8Array(to_compress.buffer), to_encode_buffer_ptr);
-            }
-        }
-        return decompressed_out;
-    } finally{
-        $8b06983e393eef12$var$stackRestore(stack_top);
+    let decompressed_out = to_decompress;
+    if (options.zstd_compression_level != 0) {
+        var zstd_simple = new options.zstd.Simple();
+        decompressed_out = zstd_simple.decompress(decompressed_out);
     }
+    if (options.integer_size != 0) {
+        const in_size = decompressed_out.byteLength;
+        const encoded_buffer_ptr = $8b06983e393eef12$var$_malloc(in_size);
+        $8b06983e393eef12$var$writeArrayToMemory(new Int8Array(decompressed_out), encoded_buffer_ptr);
+        const decoded_size = $8b06983e393eef12$var$streamvbyte_max_compressedbytes(out_size);
+        const decoded_buffer_ptr = $8b06983e393eef12$var$_malloc(decoded_size);
+        const out_buffer_size = $8b06983e393eef12$var$streamvbyte_decode(encoded_buffer_ptr, decoded_buffer_ptr, out_size);
+        $8b06983e393eef12$var$_free(encoded_buffer_ptr);
+        if (options.perform_delta_zig_zag) {
+            const decompressed_buffer_size = out_size * options.integer_size;
+            const decompressed_buffer_ptr = $8b06983e393eef12$var$_malloc(decompressed_buffer_size);
+            $8b06983e393eef12$var$zigzag_delta_decode(decoded_buffer_ptr, decompressed_buffer_ptr, out_size, 0);
+            $8b06983e393eef12$var$_free(decoded_buffer_ptr);
+            let decompressed_buffer_cast = new Int32Array($8b06983e393eef12$var$wasmMemory.buffer, decompressed_buffer_ptr, out_size);
+            $8b06983e393eef12$var$_free(decoded_buffer_ptr);
+            decompressed_out = new Int16Array(decompressed_buffer_cast);
+        } else {
+            assert(false); // need to actualy cast to 16 bit ints here...
+            throw "Didn't write this yet";
+        //writeArrayToMemory(new Int8Array(to_compress.buffer), to_encode_buffer_ptr);
+        }
+    }
+    return decompressed_out;
 }
 function $8b06983e393eef12$var$decompress_with_size(to_decompress, options = {}) {
     let data_section = new Int8Array(to_decompress, 4, to_decompress.byteLength - 4);
