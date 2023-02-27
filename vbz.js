@@ -6,8 +6,9 @@ let zigzag_delta_encode = null;
 let zigzag_delta_decode = null;
 let streamvbyte_encode = null;
 let streamvbyte_decode = null;
-let _malloc = null;
-let _free = null;
+let stackSave = null;
+let stackRestore = null;
+let stackAlloc = null;
 let writeArrayToMemory = null;
 let wasmMemory = null;
 let streamvbyte_max_compressedbytes = null;
@@ -23,8 +24,9 @@ let streamvbyte_max_compressedbytes = null;
 
   Module.then((mod) => {
     wasmMemory = mod.asm.memory;
-    _malloc = mod._malloc;
-    _malloc = mod._free;
+    stackSave = mod.stackSave;
+    stackRestore = mod.stackRestore;
+    stackAlloc = mod.stackAlloc;
     writeArrayToMemory = mod.writeArrayToMemory;
     zigzag_delta_encode = mod.cwrap("zigzag_delta_encode", null, [
       "number",
@@ -90,60 +92,63 @@ class VbzOptions {
 
 // Compress an Int??Array.
 function compress(to_compress, options = {}) {
-  let compressed_out = null;
-  if (options.integer_size != 0) {
-    if (to_compress.byteLength % options.integer_size != 0) {
-      throw new Error(
-        `expected a data view with no remainder for delta zig zag compression ${to_compress.byteLength}/${options.integer_size}`
-      );
-    }
+  const stack_top = stackSave();
 
-    const to_encode_size = to_compress.length * 4; // encode expects a 32 bit input number
-    const to_encode_buffer_ptr = _malloc(to_encode_size);
+  try {
+    let compressed_out = null;
+    if (options.integer_size != 0) {
+      if (to_compress.byteLength % options.integer_size != 0) {
+        throw new Error(
+          `expected a data view with no remainder for delta zig zag compression ${to_compress.byteLength}/${options.integer_size}`
+        );
+      }
 
-    if (options.perform_delta_zig_zag) {
-      const in_size = to_compress.byteLength;
-      const in_buffer_ptr = _malloc(in_size);
-      writeArrayToMemory(new Int8Array(to_compress.buffer), in_buffer_ptr);
+      const to_encode_size = to_compress.length * 4; // encode expects a 32 bit input number
+      const to_encode_buffer_ptr = stackAlloc(to_encode_size);
 
-      zigzag_delta_encode(
-        in_buffer_ptr,
+      if (options.perform_delta_zig_zag) {
+        const in_size = to_compress.byteLength;
+        let in_buffer_ptr = stackAlloc(in_size);
+        writeArrayToMemory(new Int8Array(to_compress.buffer), in_buffer_ptr);
+
+        zigzag_delta_encode(
+          in_buffer_ptr,
+          to_encode_buffer_ptr,
+          to_compress.length,
+          0
+        );
+      } else {
+        assert(false); // need to actualy upcast to 32 bit ints here...
+        throw "Didn't write this yet";
+        //writeArrayToMemory(new Int8Array(to_compress.buffer), to_encode_buffer_ptr);
+      }
+
+      const out_buffer_capacity = to_compress.length * 6; // total guess.
+      const out_buffer_ptr = stackAlloc(out_buffer_capacity);
+      const out_buffer_size = streamvbyte_encode(
         to_encode_buffer_ptr,
         to_compress.length,
-        0
+        out_buffer_ptr
       );
-      _free(in_buffer_ptr);
-    } else {
-      // need to actually upcast to 32 bit ints here...
-      throw "Didn't write this yet";
-      //writeArrayToMemory(new Int8Array(to_compress.buffer), to_encode_buffer_ptr);
+
+      compressed_out = new Int8Array(
+        wasmMemory.buffer,
+        out_buffer_ptr,
+        out_buffer_size
+      );
     }
 
-    const out_buffer_capacity = to_compress.length * 6; // total guess.
-    const out_buffer_ptr = _malloc(out_buffer_capacity);
-    const out_buffer_size = streamvbyte_encode(
-      to_encode_buffer_ptr,
-      to_compress.length,
-      out_buffer_ptr
-    );
-    _free(to_encode_buffer_ptr);
+    if (options.zstd_compression_level == 0) {
+      let output_copy = new Int8Array(compressed_out.length);
+      output_copy.set(compressed_out);
+      return output_copy;
+    }
 
-    compressed_out = new Int8Array(
-      wasmMemory.buffer,
-      out_buffer_ptr,
-      out_buffer_size
-    );
-    _free(out_buffer_ptr);
+    var zstd_simple = new options.zstd.Simple();
+    return zstd_simple.compress(compressed_out);
+  } finally {
+    stackRestore(stack_top);
   }
-
-  if (options.zstd_compression_level == 0) {
-    let output_copy = new Int8Array(compressed_out.length);
-    output_copy.set(compressed_out);
-    return output_copy;
-  }
-
-  var zstd_simple = new options.zstd.Simple();
-  return zstd_simple.compress(compressed_out);
 }
 
 function compress_with_size(to_compress, options = {}) {
@@ -159,53 +164,53 @@ function compress_with_size(to_compress, options = {}) {
 }
 
 function decompress(to_decompress, out_size, options = {}) {
-  let decompressed_out = to_decompress;
-  if (options.zstd_compression_level != 0) {
-    var zstd_simple = new options.zstd.Simple();
-    decompressed_out = zstd_simple.decompress(decompressed_out);
-  }
+  const stack_top = stackSave();
+  try {
+    let decompressed_out = to_decompress;
+    if (options.zstd_compression_level != 0) {
+      var zstd_simple = new options.zstd.Simple();
+      decompressed_out = zstd_simple.decompress(decompressed_out);
+    }
 
-  if (options.integer_size != 0) {
-    const in_size = decompressed_out.byteLength;
-    const encoded_buffer_ptr = _malloc(in_size);
-    writeArrayToMemory(new Int8Array(decompressed_out), encoded_buffer_ptr);
-    const decoded_size = streamvbyte_max_compressedbytes(out_size);
-    const decoded_buffer_ptr = _malloc(decoded_size);
+    if (options.integer_size != 0) {
+      const in_size = decompressed_out.byteLength;
+      let encoded_buffer_ptr = stackAlloc(in_size);
+      writeArrayToMemory(new Int8Array(decompressed_out), encoded_buffer_ptr);
+      const decoded_size = streamvbyte_max_compressedbytes(out_size);
+      const decoded_buffer_ptr = stackAlloc(decoded_size);
 
-    const out_buffer_size = streamvbyte_decode(
-      encoded_buffer_ptr,
-      decoded_buffer_ptr,
-      out_size
-    );
-    _free(encoded_buffer_ptr);
-
-    if (options.perform_delta_zig_zag) {
-      const decompressed_buffer_size = out_size * options.integer_size;
-      const decompressed_buffer_ptr = _malloc(decompressed_buffer_size);
-
-      zigzag_delta_decode(
+      const out_buffer_size = streamvbyte_decode(
+        encoded_buffer_ptr,
         decoded_buffer_ptr,
-        decompressed_buffer_ptr,
-        out_size,
-        0
-      );
-      _free(decoded_buffer_ptr);
-
-      let decompressed_buffer_cast = new Int32Array(
-        wasmMemory.buffer,
-        decompressed_buffer_ptr,
         out_size
       );
-      _free(decoded_buffer_ptr);
 
-      decompressed_out = new Int16Array(decompressed_buffer_cast);
-    } else {
-      assert(false); // need to actualy cast to 16 bit ints here...
-      throw "Didn't write this yet";
-      //writeArrayToMemory(new Int8Array(to_compress.buffer), to_encode_buffer_ptr);
+      if (options.perform_delta_zig_zag) {
+        const decompressed_buffer_size = out_size * options.integer_size;
+        let decompressed_buffer_ptr = stackAlloc(decompressed_buffer_size);
+
+        zigzag_delta_decode(
+          decoded_buffer_ptr,
+          decompressed_buffer_ptr,
+          out_size,
+          0
+        );
+        let decompressed_buffer_cast = new Int32Array(
+          wasmMemory.buffer,
+          decompressed_buffer_ptr,
+          out_size
+        );
+        decompressed_out = new Int16Array(decompressed_buffer_cast);
+      } else {
+        assert(false); // need to actualy cast to 16 bit ints here...
+        throw "Didn't write this yet";
+        //writeArrayToMemory(new Int8Array(to_compress.buffer), to_encode_buffer_ptr);
+      }
     }
+    return decompressed_out;
+  } finally {
+    stackRestore(stack_top);
   }
-  return decompressed_out;
 }
 
 function decompress_with_size(to_decompress, options = {}) {
